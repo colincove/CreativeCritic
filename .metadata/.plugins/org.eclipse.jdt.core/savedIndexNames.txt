@@ -1,3 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Colin\CreativeCritic\.metadata\.plugins\org.eclipse.jdt.core
-1492850697.index
-1454086817.index
