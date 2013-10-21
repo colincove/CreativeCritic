@@ -1,29 +1,42 @@
 
+<html>
+<head>
+          <link rel='stylesheet' href='style.css' type='text/css' >
+      </link>
+      <script src='script.js' ></script>
+    </head>
+    <body class='webservices'>
+
 <?php
-$con=  mysql_connect("IAT381ReviewData.db.8574327.hostedresource.com","IAT381ReviewData","Drgs4f8sS#");
-$db_selected=mysql_select_db ('IAT381ReviewData', $con);
+$con         = mysql_connect("IAT381ReviewData.db.8574327.hostedresource.com", "IAT381ReviewData", "Drgs4f8sS#");
+$db_selected = mysql_select_db('IAT381ReviewData', $con);
 
 
-
-if(isset($_POST['make_query'])){
-	//do make query
-	$query = sprintf($_POST['query']);
-
-	$result=mysql_query($query, $con) or die(mysql_error());
-
-	printResult($result);
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// QUERIES //////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['make_query'])) {
+    //do make query
+    $query = sprintf($_POST['query']);
+    
+    $result = mysql_query($query, $con) or die(mysql_error());
+    
+    printResult($result);
 }
-if(isset(isset($_POST['get_subordinates']))){
-	$query=sprintf("SELECT node.category_id, node.name, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// VIEW CATAGORY TREE ///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['get_subordinates'])) {
+    $query = sprintf("SELECT node.category_id, node.name, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
 FROM nested_category AS node,
         nested_category AS parent,
-        nested_categorcy AS sub_parent,
+        nested_category AS sub_parent,
         (
                 SELECT node.category_id, (COUNT(parent.category_id) - 1) AS depth
                 FROM nested_category AS node,
                         nested_category AS parent
                 WHERE node.lft BETWEEN parent.lft AND parent.rgt
-                        AND node.category_id = 2
+                        AND node.category_id = %s
                 GROUP BY node.category_id
                 ORDER BY node.lft
         )AS sub_tree
@@ -33,55 +46,187 @@ WHERE node.lft BETWEEN parent.lft AND parent.rgt
 GROUP BY node.category_id
 HAVING depth <= 1
 ORDER BY node.lft;
-");
+", mysql_real_escape_string($_POST['node_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    
+    printResult($result);
 }
-function printResult($result){
-	if(is_bool($result)==false){
+if (isset($_POST['get_tree'])) {
+    $query = "SELECT * FROM nested_category ORDER BY category_id;";
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+if (isset($_POST['get_nested_tree'])) {
+    $query = sprintf("SELECT (COUNT(parent.name) - 1) AS depth, 
+    CONCAT( REPEAT(' ', COUNT(parent.name) - 1), node.name) AS name,
+    CONCAT( REPEAT(' ', COUNT(parent.category_id) - 1), node.category_id) AS category_id
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+GROUP BY node.name
+ORDER BY node.lft;");
+    $result = mysql_query($query, $con) or die(mysql_error());
+    
+    printNestedResult($result);
+}
+if(isset($_POST['get_path'])){
+	$query = sprintf("SELECT parent.name
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+        AND node.category_id = %s
+ORDER BY node.lft;", 
+mysql_real_escape_string($_POST['category_id']));
+$result = mysql_query($query, $con) or die(mysql_error());
+    
+    printNestedResult($result);
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// EDIT CATAGORY TREE ///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
+if(isset($_POST['add_category'])){
+$query = sprintf("CALL AddCategory('%s', %s);", 
+	mysql_real_escape_string($_POST['category_name']),
+mysql_real_escape_string($_POST['category_id']));
+$result = mysql_query($query, $con) or die(mysql_error());
+   printResult($result);
+}
+if(isset($_POST['add_category_leaf'])){
+$query = sprintf("CALL AddCategoryToLeaf('%s', %s);", 
+	mysql_real_escape_string($_POST['category_name']),
+mysql_real_escape_string($_POST['category_id']));
+$result = mysql_query($query, $con) or die(mysql_error());
+   printResult($result);
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// SCORED REVIEWS ///////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['make_review'])) {
+    $query = sprintf("INSERT INTO scored_review (review_text, score, user_id, category_id) 
+		VAlUES('%s', '%s', '%s', '%s')", 
+		mysql_real_escape_string($_POST['review_text']), 
+		mysql_real_escape_string($_POST['score']), 
+		mysql_real_escape_string($_POST['user_id']),
+		mysql_real_escape_string($_POST['category_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
 
-	while($row = mysql_fetch_assoc($result)){
-    foreach($row as $cname => $cvalue){
-        print "$cname: $cvalue\t";
+if (isset($_POST['get_reviews'])) {
+    $query = sprintf("SELECT * FROM scored_review ORDER BY review_id;");
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+if (isset($_POST['get_catagory_reviews'])) {
+    $query = sprintf("SELECT * FROM scored_review WHERE category_id=%s ORDER BY score",
+    	mysql_real_escape_string($_POST['catagory_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// USERS ///////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['get_users'])) {
+    $query = sprintf("SELECT * FROM users ORDER BY user_id;");
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+if (isset($_POST['insert_user_with_email'])) {
+    $query = sprintf("INSERT INTO users (name, email)
+		VAlUES('%s', '%s');", 
+		mysql_real_escape_string($_POST['name']), 
+		mysql_real_escape_string($_POST['email']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+if (isset($_POST['insert_user_with_device'])) {
+    $query = sprintf("INSERT INTO users (name, device_id)
+		VAlUES('%s', '%s');", 
+		mysql_real_escape_string($_POST['name']), 
+		mysql_real_escape_string($_POST['device_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+
+if (isset($_POST['get_user_by_email'])) {
+    $query = sprintf("SELECT * FROM users WHERE email='%s';",
+    	mysql_real_escape_string($_POST['email']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+if (isset($_POST['get_user_by_device'])) {
+    $query = sprintf("SELECT * FROM users WHERE device_id='%s';",
+    	mysql_real_escape_string($_POST['device_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    printResult($result);
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// PRINTING /////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function printResult($result)
+{
+    if (is_bool($result) == false) {
+        if ($nested)
+            print("<ul>");
         
+        while ($row = mysql_fetch_assoc($result)) {
+          printRow($row);
+            print "</br>";
+        }
+        if ($nested)
+            print("</ul>");
+        print "\r\n";
+    }else{
+    	print "<h1>Success!</h1> </br>";
+    	print $query;
     }
-    print "</br>";
 }
-    print "\r\n";
-}
-}
-/*$query1 =  sprintf("INSERT INTO levelPlaythroughs (user, loadOut, score, photoId,replay,enemiesKilled, accuracy, gearsCollected, level) VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s')",
-	mysql_real_escape_string($userId),
-	mysql_real_escape_string($loadOut),
-	mysql_real_escape_string($score),
-	mysql_real_escape_string($photoId),
-	mysql_real_escape_string($replay),
-	mysql_real_escape_string($enemiesKilled),
-	mysql_real_escape_string($accuracy),
-	mysql_real_escape_string($gearsCollected),
-	mysql_real_escape_string($level));*/
+//each row should have a 'depth' attribute selected
+function printNestedResult($result)
+{
+    if (is_bool($result) == false) {
 
-CREATE TABLE users
-(
-        user_id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(40) DEFAULT 'ANON',
-        device_id VARCHAR(40) UNIQUE,
-        email VARCHAR(40) UNIQUE
-);
-CREATE TABLE scored_review
-(
-        review_id INT AUTO_INCREMENT PRIMARY KEY,
-        review_text TEXT NOT NULL DEFAULT '',
-        date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        modified TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-        score INT NOT NULL DEFAULT 100,
-        user_id INT NOT NULL, 
-        category_id INT NOT NULL,
-        CONSTRAINT review_owner FOREIGN KEY (user_id)
-        REFERENCES users (user_id),
-         CONSTRAINT category_ref FOREIGN KEY (category_id)
-        REFERENCES nested_category (category_id)
-);
-
+            print("<ul>");
+        $depth = 0;
+        while ($row = mysql_fetch_assoc($result)) {
+        	if($depth < $row['depth']){
+        		print "<ul>";
+        	}
+        	if($depth > $row['depth']){
+        		print "</ul>";
+        	}
+        	if($depth==$row['depth']){
+				print "<li>";
+        	}
+        	
+            printRow($row);
+if($depth==$row['depth']){
+				print "</li>";
+        	}
+            $depth=$row['depth'];
+        }
+while($depth>0){
+	print "</ul>";
+	$depth=$depth-1;
+}
+            print("</ul>");
+        print "\r\n";
+    }
+}
+function printRow($row){
+     foreach ($row as $cname => $cvalue) {
+                print "$cname: ";
+                if($cname=='name'){
+                    print "<span>";
+                }
+                print "$cvalue\t";
+                 if($cname=='name'){
+                    print "</span>";
+                }
+            }
+}
 ?>
 
-
+    </body>
+</html>

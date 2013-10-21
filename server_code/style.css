@@ -1,7 +1,32 @@
 .form_container{
+	margin-bottom: 50px;
 	width: 100%;
+	background-color:#fff4e2;
+	padding: 10px;
+}
+
+body{
+	margin: 0px;
+	padding: 20px;
+	background-color:#e7dece;
 }
 textarea{
 	width:100%;
 	height: 200px;
 }
+h1, h2, h3{
+	color: #847e73;
+}
+ul, li{
+	list-style-type: none;
+}
+.webservices span{
+	color: #b17e26;
+}
+.webservices{
+	color: #847e73;
+}
+
+
+
+/*#e7dece;*/
