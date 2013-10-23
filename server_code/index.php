@@ -30,6 +30,18 @@
             <input type='submit' name='get_path' value='Get Path'></input>
              <input type='text' name='category_id' value='ID'></input>
          </form>
+		 <div class="form_seperator"></div>
+		 <h2>App API</h2>
+		 <form id='get_subordinates' action='mobile_services.php' method='post'>
+            <input type='submit' name='get_subordinates' value='Get Subordinates'></input>
+             <input type='text' name='node_id' value='ID'></input>
+			 <input type="hidden" name="action" value="get_subordinates"></input>
+         </form>
+		 <form id='get_path' action='mobile_services.php' method='post'>
+            <input type='submit' name='get_path' value='Get Path'></input>
+             <input type='text' name='category_id' value='ID'></input>
+			 <input type="hidden" name="action" value="get_path"></input>
+         </form>
       </div>
         <div class="form_container">
          <h1>Edit Catagory Tree</h1>
@@ -47,14 +59,16 @@
          </form>
          <form id='delete_category' action='developer_services.php' method='post'>
             <h3>Delete non-leaf node</h3>
-            <input type='submit' name='delete_category' value='Delete' disabled></input>
+            <input type='submit' name='delete_category' value='Delete'></input>
            Category ID:  <input type='text' name='category_id' value='ID'></input>
          </form>
          <form id='delete_category_leaf' action='developer_services.php' method='post'>
             <h3>Delete a leaf node</h3>
-            <input type='submit' name='delete_category_leaf' value='Delete' disabled></input>
-            Category ID: <input type='text' name='category_name' value='ID'></input>
+            <input type='submit' name='delete_category_leaf' value='Delete'></input>
+            Category ID: <input type='text' name='category_id' value='ID'></input>
          </form>
+
+		 
       </div>
       <div class="form_container">
          <h1>Reviews</h1>
@@ -72,6 +86,22 @@
             Catagory ID: <input type='text' name='category_id'></input>
             Score: <input type='text' name='score'></input>
             <textarea form='review' name='review_text'></textarea>
+         </form>
+		 		 <div class="form_seperator"></div>
+		 <h2>App API</h2>
+		   <form id='get_catagory_reviews' action='mobile_services.php' method='post'>
+            <input type='submit' name='get_catagory_reviews' value='Get Catagory Reviews'></input>
+            <input type='text' name='catagory_id' value='ID'></input>
+			<input type="hidden" name="action" value="get_catagory_reviews"></input>
+         </form>
+		           <h3>Insert Review</h3>
+         <form id='mobile_review' action='mobile_services.php' method='post'>
+            <input type='submit' name='make_review'></input>
+            User ID: <input type='text' name='user_id'></input>
+            Catagory ID: <input type='text' name='category_id'></input>
+            Score: <input type='text' name='score'></input>
+            <textarea form='mobile_review' name='review_text'></textarea>
+			<input type="hidden" name="action" value="make_review"></input>
          </form>
       </div>
        <div class="form_container">

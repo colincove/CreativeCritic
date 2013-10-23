@@ -58,7 +58,7 @@ ORDER BY node.lft;");
     return $result;
 }
 function get_path($con){
-	$query = sprintf("SELECT parent.name
+	$query = sprintf("SELECT parent.name, parent.category_id
 FROM nested_category AS node,
         nested_category AS parent
 WHERE node.lft BETWEEN parent.lft AND parent.rgt
@@ -84,6 +84,18 @@ function add_category_leaf($con){
 $query = sprintf("CALL AddCategoryToLeaf('%s', %s);", 
 	mysql_real_escape_string($_POST['category_name']),
 mysql_real_escape_string($_POST['category_id']));
+$result = mysql_query($query, $con) or die(mysql_error());
+   return $result;
+}
+function delete_category($con){
+		$query = sprintf("CALL RemoveCategory(%s);", 
+	mysql_real_escape_string($_POST['category_id']));
+$result = mysql_query($query, $con) or die(mysql_error());
+   return $result;
+}
+function delete_category_leaf($con){
+	$query = sprintf("CALL RemoveCategoryLeaf(%s);", 
+	mysql_real_escape_string($_POST['category_id']));
 $result = mysql_query($query, $con) or die(mysql_error());
    return $result;
 }
