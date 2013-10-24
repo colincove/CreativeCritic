@@ -128,6 +128,31 @@
             User Name: <input type='text' name='name'></input>
             Device ID: <input type='text' name='device_id'></input>
          </form>
+         <div class="form_seperator"></div>
+     <h2>App API</h2>
+     <form id='get_user_by_email' action='mobile_services.php' method='post'>
+            <input type='submit' name='get_user_by_email' value='Get User by Email'></input>
+            <input type='text' name='email' value='Email'></input>
+            <input type="hidden" name="action" value="get_user_by_email"></input>
+         </form>
+           <form id='get_user_by_device' action='mobile_services.php' method='post'>
+            <input type='submit' name='get_user_by_device' value='Get User by Device'></input>
+            <input type='text' name='device_id' value='Device ID'></input>
+            <input type="hidden" name="action" value="get_user_by_device"></input>
+         </form>
+<h3>Insert Users</h3>
+         <form id='insert_user_with_email' action='mobile_services.php' method='post'>
+            <input type='submit' name='insert_user_with_email'></input>
+            User Name: <input type='text' name='name'></input>
+            Email: <input type='text' name='email'></input>
+            <input type="hidden" name="action" value="insert_user_with_email"></input>
+         </form>
+          <form id='insert_user_with_device' action='mobile_services.php' method='post'>
+            <input type='submit' name='insert_user_with_device'></input>
+            User Name: <input type='text' name='name'></input>
+            Device ID: <input type='text' name='device_id'></input>
+            <input type="hidden" name="action" value="insert_user_with_device"></input>
+         </form>
       </div>
    </body>
 </html>
