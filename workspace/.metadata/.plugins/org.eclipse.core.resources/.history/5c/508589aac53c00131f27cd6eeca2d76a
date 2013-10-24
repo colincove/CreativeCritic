@@ -1,0 +1,5 @@
+package com.example.creativecritic.webservices;
+
+public class Request {
+	public Request();
+}

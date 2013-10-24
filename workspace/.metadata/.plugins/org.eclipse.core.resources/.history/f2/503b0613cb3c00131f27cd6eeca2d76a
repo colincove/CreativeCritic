@@ -1,0 +1,40 @@
+package com.example.creativecritic.webservices;
+
+import java.io.IOException;
+import java.util.UUID;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+public abstract class Webservices {
+	
+	protected Webservices(){
+		
+	}
+	public void request(Request request){
+		// Create a new HttpClient and Post Header
+	    HttpClient httpclient = new DefaultHttpClient();
+	    HttpPost httppost = new HttpPost(request.getUrl());
+
+	    try {
+
+	        httppost.setEntity(new UrlEncodedFormEntity(request.getNameValuePairs()));
+
+	        // Execute HTTP Post Request
+	        HttpResponse response = httpclient.execute(httppost);
+	        
+	        Result result=request.createResult(response);
+	        
+	        request.getResultListener().result(result);
+
+	    } catch (ClientProtocolException e) {
+	        // TODO Auto-generated catch block
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	    }
+	}
+}

@@ -1,0 +1,12 @@
+package com.example.creativecritic;
+
+public class User {
+	private String email;
+	private String device;
+	private String name;
+	private int id;
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

@@ -1,0 +1,13 @@
+package com.example.creativecritic.webservices;
+
+import java.util.UUID;
+
+public class Request {
+	private UUID uuid;
+	public Request(){
+		
+	}
+	public UUID getUUId(){
+		
+	}
+}

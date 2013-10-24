@@ -1,0 +1,22 @@
+package com.example.creativecritic.webservices;
+
+import java.util.UUID;
+
+public class Webservices {
+	private static Webservices _instance;
+	
+	
+	
+	private Webservices(){
+		
+	}
+	public static Webservices getInstance(){
+		if(_instance==null){
+			_instance = new Webservices();
+		}
+		return _instance;
+	}
+	public void request(){
+		
+	}
+}

@@ -1,0 +1,9 @@
+package com.example.creativecritic.webservices;
+
+public class Request {
+	private UUID id;
+	public Request(){
+		
+	}
+	public void 
+}

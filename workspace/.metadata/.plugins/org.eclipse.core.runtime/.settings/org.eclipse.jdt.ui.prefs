@@ -1,3 +1,4 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.util.Collection"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.List"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="com.example.creativecritic.webservices.Result"><rhs name\="com.example.creativecritic.webservices.Result"/></lhs><lhs name\="org.apache.http.HttpEntity"><rhs name\="org.apache.http.client.entity.UrlEncodedFormEntity"/></lhs><lhs name\="com.example.creativecritic.webservices.Webservices"><rhs name\="com.example.creativecritic.CreateCriticWebservices"/></lhs><lhs name\="com.example.creativecritic.CreateCriticWebservices"><rhs name\="com.example.creativecritic.CreateCriticWebservices"/></lhs><lhs name\="com.example.creativecritic.User"><rhs name\="com.example.creativecritic.User"/></lhs><lhs name\="java.lang.Readable"><rhs name\="java.io.InputStreamReader"/></lhs><lhs name\="java.io.Closeable"><rhs name\="java.io.InputStreamReader"/></lhs><lhs name\="java.io.Reader"><rhs name\="java.io.InputStreamReader"/></lhs><lhs name\="java.lang.Exception"><rhs name\="org.json.JSONException"/></lhs><lhs name\="java.lang.Throwable"><rhs name\="org.json.JSONException"/></lhs><lhs name\="org.json.JSONException"><rhs name\="org.json.JSONException"/></lhs><lhs name\="org.apache.http.NameValuePair"><rhs name\="org.apache.http.message.BasicNameValuePair"/></lhs><lhs name\="com.example.creativecritic.webservices.Request"><rhs name\="com.example.creativecritic.UserLoginRequest"/></lhs></history>
 content_assist_number_of_computers=12
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
@@ -6,6 +7,10 @@ fontPropagated=true
 org.eclipse.jdt.ui.editor.tab.width=
 org.eclipse.jdt.ui.formatterprofiles.version=12
 org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
 org.eclipse.jface.textfont=1|Consolas|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas;
 proposalOrderMigrated=true
 spelling_locale_initialized=true

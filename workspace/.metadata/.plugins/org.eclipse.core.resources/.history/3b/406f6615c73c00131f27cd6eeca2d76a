@@ -1,0 +1,20 @@
+package com.example.creativecritic.webservices;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.http.NameValuePair;
+
+public class Request {
+	private UUID uuid;
+	private List<NameValuePair> nameValuePairs;
+	public Request(){
+		uuid = new UUID(8, 4);
+	}
+	public UUID getUUId(){
+		return uuid;
+	}
+	public void getPostVariables(){
+		
+	}
+}

@@ -1,0 +1,20 @@
+package com.example.creativecritic;
+
+import org.apache.http.HttpResponse;
+import org.json.JSONObject;
+
+import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Request;
+import com.example.creativecritic.webservices.Result;
+
+public class UserLoginRequest extends Request {
+	public UserLoginRequest(IResultListener resultListener){
+		super(resultListener);
+	}
+	
+	public Result createResult(JSONObject jObj){
+		//response.
+		User user = new User(4, "3434342");
+		return new UserLoginResult(true, this, user);
+	}
+}

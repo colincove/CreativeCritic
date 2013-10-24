@@ -1,0 +1,7 @@
+package com.example.creativecritic;
+
+import com.example.creativecritic.webservices.Request;
+
+public class UserLoginRequest extends Request {
+
+}

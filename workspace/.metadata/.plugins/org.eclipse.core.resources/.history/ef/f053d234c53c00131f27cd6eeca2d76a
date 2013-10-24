@@ -1,0 +1,14 @@
+package com.example.creativecritic.webservices;
+
+import java.util.UUID;
+
+public class Result {
+	private boolean status;
+	private UUID requestId;
+	public Result(boolean status, UUID requestID){
+		this.status = status;
+	}
+	public boolean getStatus(){
+		return status;
+	}
+}

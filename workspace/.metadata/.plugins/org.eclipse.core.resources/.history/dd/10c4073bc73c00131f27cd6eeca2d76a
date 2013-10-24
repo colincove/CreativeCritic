@@ -1,0 +1,22 @@
+package com.example.creativecritic.webservices;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.http.NameValuePair;
+
+public class Request {
+	private UUID uuid;
+	protected List<NameValuePair> nameValuePairs;
+	public Request(){
+		nameValuePairs=new ArrayList<NameValuePair>();
+		uuid = new UUID(8, 4);
+	}
+	public UUID getUUId(){
+		return uuid;
+	}
+	public List<NameValuePair> getNameValuePairs(){
+		return nameValuePairs;
+	}
+}
