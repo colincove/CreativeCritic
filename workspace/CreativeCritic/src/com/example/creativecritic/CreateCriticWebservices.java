@@ -1,6 +1,7 @@
 package com.example.creativecritic;
 
 import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Request;
 import com.example.creativecritic.webservices.Webservices;
 
 public class CreateCriticWebservices extends Webservices {
@@ -17,7 +18,10 @@ public class CreateCriticWebservices extends Webservices {
 	public void requestUserFromDevice(IResultListener resultListener){
 		
 	}
-public void requestUserFromEmail(IResultListener resultListener){
-		super.request(new UserLoginRequest(resultListener));
+public Request requestUserFromEmail(IResultListener resultListener){
+		return super.request(new UserLoginRequest(resultListener));
+	}
+	public Request requestSubordinates(IResultListener resultListener, int category_id){
+		return super.request(new SubordinatesRequest(resultListener, category_id));
 	}
 }

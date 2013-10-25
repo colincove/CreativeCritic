@@ -1,0 +1,11 @@
+package com.example.creativecritic;
+
+public class Category {
+	private String name;
+	private int id;
+	private int score;
+	public Category(name, id) {
+		// TODO Auto-generated constructor stub
+	}
+
+}

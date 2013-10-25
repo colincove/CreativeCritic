@@ -23,9 +23,10 @@ public abstract class Webservices {
 	protected Webservices(){
 		
 	}
-	public void request(Request request){
+	public Request request(Request request){
 		Thread requestThread  = new RequestThread(request);
 		requestThread.start();
+		return request;
 	}
 }
 class RequestThread extends Thread{

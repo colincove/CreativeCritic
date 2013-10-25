@@ -1,0 +1,25 @@
+package com.example.creativecritic;
+
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Request;
+import com.example.creativecritic.webservices.Result;
+
+public class SubordinatesRequest extends Request {
+
+	public SubordinatesRequest(IResultListener resultListener) {
+		super(resultListener);
+		nameValuePairs.add(new BasicNameValuePair("category_id", "2"));
+		nameValuePairs.add(new BasicNameValuePair("action", "get_subordinates"));
+		this.url="http://www.covertstudios.ca/IAT381/mobile_services.php";
+	}
+	@Override
+	public Result createResult(JSONObject jObj){
+		//JSONObject categoryList=jObj.get();
+		JSONArray categoryList= jObj.getJSONArray("data");
+		return new SubordinatesResult(true, this);
+	}
+}

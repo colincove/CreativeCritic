@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.util.UUID"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="org.apache.http.NameValuePair"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="com.example.creativecritic.webservices.Request"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.webservices.Result"/>
 <fullyQualifiedTypeName name="org.apache.http.client.methods.HttpPost"/>
 <fullyQualifiedTypeName name="org.apache.http.impl.client.DefaultHttpClient"/>
@@ -26,4 +23,14 @@
 <fullyQualifiedTypeName name="com.example.creativecritic.CreateCriticWebservices"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.webservices.IResultListener"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.UserLoginRequest"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.SubordinatesRequest"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.webservices.Request"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.SubordinatesResult"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout.LayoutParams"/>
+<fullyQualifiedTypeName name="android.view.ViewGroup.LayoutParams"/>
 </qualifiedTypeNameHistroy>
