@@ -1,7 +1,0 @@
-package com.example.creativecritic.webservices;
-
-public class Result {
-	public Result(){
-		
-	}
-}

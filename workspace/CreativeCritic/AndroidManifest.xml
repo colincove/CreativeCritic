@@ -7,7 +7,8 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,30 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.creativecritic.CategoryScreen"
+            android:label="@string/title_activity_category_screen"
+            android:parentActivityName="optional" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="optional" />
+        </activity>
+        <activity
+            android:name="com.example.creativecritic.InDepthDiscussion"
+            android:label="@string/title_activity_in_depth_discussion" >
+        </activity>
+        <activity
+            android:name="com.example.creativecritic.ScoreCreate"
+            android:label="@string/title_activity_score_create" >
+        </activity>
+        <activity
+            android:name="com.example.creativecritic.LowestDetailLevel"
+            android:label="@string/title_activity_lowest_detail_level" >
+        </activity>
+        <activity
+            android:name="com.example.creativecritic.ScoreCreator"
+            android:label="@string/title_activity_score_creator" >
         </activity>
     </application>
 

@@ -1,9 +1,0 @@
-package com.example.creativecritic;
-
-public class Category {
-
-	public Category() {
-		// TODO Auto-generated constructor stub
-	}
-
-}
