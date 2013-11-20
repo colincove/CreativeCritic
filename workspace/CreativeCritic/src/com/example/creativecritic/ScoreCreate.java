@@ -1,9 +1,13 @@
 package com.example.creativecritic;
 
+import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Result;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,13 +17,25 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 public class ScoreCreate extends FragmentActivity implements
-		ActionBar.OnNavigationListener {
+		ActionBar.OnNavigationListener, OnSeekBarChangeListener, OnClickListener, IResultListener {
 
+	
+	private SeekBar scoreSelectBar;
+	private EditText commentText;
+	private Button scoreButton;
+	private TextView scoreTextView;
+	
+	private float barValue;
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
@@ -45,6 +61,19 @@ public class ScoreCreate extends FragmentActivity implements
 								getString(R.string.title_section1),
 								getString(R.string.title_section2),
 								getString(R.string.title_section3), }), this);
+		
+		scoreSelectBar = (SeekBar) findViewById(R.id.scoreSelectSeekBar);
+		
+		commentText = (EditText) findViewById(R.id.commentEditText);
+		
+		scoreButton = (Button) findViewById(R.id.postScorebutton);
+		
+		scoreTextView = (TextView) findViewById(R.id.scoreTextView);
+		
+		scoreSelectBar.setOnSeekBarChangeListener(this);
+		
+		scoreButton.setOnClickListener(this);
+		
 	}
 
 	/**
@@ -124,4 +153,55 @@ public class ScoreCreate extends FragmentActivity implements
 		}
 	}
 
+	@Override
+	public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
+		// TODO Auto-generated method stub
+		barValue = scoreSelectBar.getProgress();
+		updateNumber();
+
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void updateNumber()
+	{
+		String barStringValue = String.valueOf(barValue);
+		scoreTextView.setText(barStringValue);
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if(v.getId() == R.id.postScorebutton )
+		{
+			//call colin's method
+			
+		}
+		
+	}
+
+	@Override
+	public void result(Result result) {
+		// TODO Auto-generated method stub
+		Intent returnIntent = new Intent();
+		setResult(RESULT_CANCELED, returnIntent);
+		finish();
+		
+	}
+
+	@Override
+	public void resultFail() {
+		// TODO Auto-generated method stub
+		
+	}
 }

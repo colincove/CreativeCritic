@@ -25,15 +25,15 @@ public final class R {
     }
     public static final class id {
         public static final int MainScrollView=0x7f050010;
-        public static final int action_settings=0x7f05001c;
+        public static final int action_settings=0x7f05001b;
         public static final int categoryScrollView=0x7f050005;
         public static final int categoryTitleTextView=0x7f050002;
-        public static final int commentEditText=0x7f050018;
+        public static final int commentEditText=0x7f050017;
         public static final int container=0x7f050001;
         public static final int discussionPostsTextView=0x7f05000a;
         public static final int discussionScoreTextView=0x7f050007;
         public static final int discussionScrollView=0x7f050009;
-        public static final int findScoreButton=0x7f050013;
+        public static final int findScoreButton=0x7f050012;
         public static final int fullCommentTextView=0x7f050008;
         public static final int generalScoreTextView=0x7f050003;
         public static final int inDepthItemListScrollView=0x7f05000f;
@@ -41,16 +41,15 @@ public final class R {
         public static final int inDepthTitleTextView=0x7f05000b;
         public static final int innerCategoryListView=0x7f050006;
         public static final int list_layout=0x7f050000;
-        public static final int loginButton=0x7f050012;
         public static final int newScoreButton=0x7f05000d;
-        public static final int outOfHundredTextView=0x7f050017;
-        public static final int postScorebutton=0x7f050015;
+        public static final int outOfHundredTextView=0x7f050016;
+        public static final int postScorebutton=0x7f050014;
         public static final int scoreNumberTextView=0x7f050004;
-        public static final int scoreSelectSeekBar=0x7f050016;
-        public static final int scoreTextView=0x7f05001a;
-        public static final int section_label=0x7f05001b;
-        public static final int slashTextView=0x7f050019;
-        public static final int startScreenListView=0x7f050014;
+        public static final int scoreSelectSeekBar=0x7f050015;
+        public static final int scoreTextView=0x7f050019;
+        public static final int section_label=0x7f05001a;
+        public static final int slashTextView=0x7f050018;
+        public static final int startScreenListView=0x7f050013;
         public static final int titleTextView=0x7f050011;
         public static final int userCommentsTextView=0x7f05000e;
     }
