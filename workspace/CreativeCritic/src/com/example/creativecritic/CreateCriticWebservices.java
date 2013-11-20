@@ -1,6 +1,7 @@
 package com.example.creativecritic;
 
 import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.MakeReviewRequest;
 import com.example.creativecritic.webservices.Request;
 import com.example.creativecritic.webservices.Webservices;
 
@@ -23,5 +24,8 @@ public Request requestUserFromEmail(IResultListener resultListener){
 	}
 	public Request requestSubordinates(IResultListener resultListener, int category_id){
 		return super.request(new SubordinatesRequest(resultListener, category_id));
+	}
+	public Request makeReview(IResultListener resultListener, String review_text, int score, int user_id, int category_id){
+		return super.request(new MakeReviewRequest(resultListener, review_text, score, user_id, category_id));
 	}
 }
