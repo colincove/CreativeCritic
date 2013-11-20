@@ -31,7 +31,10 @@ public class CategoryReview {
 	public int getCategoryId(){
 		return category_id;
 	}
-	
+	@ Override
+	public String toString(){
+		return "Score: "+score+" : "+review_text;
+	}
 }
 /*
  * 

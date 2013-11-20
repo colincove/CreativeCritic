@@ -188,8 +188,9 @@ public class ScoreCreate extends FragmentActivity implements
 		{
 			//call colin's method
 			String commentString = commentText.getText().toString();
+			int b = (int)barValue;
 			webservices = CreateCriticWebservices.getInstance();
-			webservices.makeReview(this, , score, user_id, category_id)
+			webservices.makeReview(this, commentString	, b , 9 , 8);
 			
 		}
 		

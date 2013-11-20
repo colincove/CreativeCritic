@@ -1,9 +1,18 @@
 package com.example.creativecritic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.creativecritic.webservices.CategoryReview;
+import com.example.creativecritic.webservices.GetReviewsResult;
+import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Result;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,12 +22,27 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class LowestDetailLevel extends FragmentActivity implements
-		ActionBar.OnNavigationListener {
+		ActionBar.OnNavigationListener, OnClickListener, IResultListener {
+	
+	
+	private TextView titleText;
+	private TextView scoreText;
+	private EditText scoreComment;
+	private Button postScoreButton;
+	private ListView otherUserListView;
+	
+	private ArrayAdapter<CategoryReview> listAdapter;
+	
+	private CreateCriticWebservices webservices;
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -45,6 +69,25 @@ public class LowestDetailLevel extends FragmentActivity implements
 								getString(R.string.title_section1),
 								getString(R.string.title_section2),
 								getString(R.string.title_section3), }), this);
+		
+		titleText = (TextView) findViewById(R.id.inDepthTitleTextView);
+		
+		scoreText = (TextView) findViewById(R.id.inDepthScoreNumberTextView);
+		
+		scoreComment = (EditText) findViewById(R.id.userCommentsTextView);
+		
+		postScoreButton = (Button) findViewById(R.id.newScoreButton);
+		postScoreButton.setOnClickListener(this);
+		
+		otherUserListView = (ListView) findViewById(R.id.discussionPostsTextView);
+		
+		webservices = CreateCriticWebservices.getInstance();
+		
+		webservices.getReviews(this, 8);
+		
+		listAdapter = new ArrayAdapter(this, R.layout.review_item2);
+		
+		otherUserListView.setAdapter(listAdapter);
 	}
 
 	/**
@@ -123,6 +166,36 @@ public class LowestDetailLevel extends FragmentActivity implements
 					ARG_SECTION_NUMBER)));
 			return rootView;
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if(v.getId() == R.id.newScoreButton)
+		{
+			Intent i = new Intent(this, ScoreCreate.class);
+			startActivity(i);
+		}
+	}
+
+	@Override
+	public void result(Result result) {
+		// TODO Auto-generated method stub
+		GetReviewsResult reviews = (GetReviewsResult) result;
+		
+		List<CategoryReview> catRev =  new ArrayList<CategoryReview>();
+		catRev.addAll(reviews.getReviews());
+		listAdapter = new ArrayAdapter(this, R.layout.review_item2, catRev);
+		
+		otherUserListView.setAdapter(listAdapter);
+//		listAdapter.clear();
+//		listAdapter.addAll(reviews.getReviews());
+	}
+
+	@Override
+	public void resultFail() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

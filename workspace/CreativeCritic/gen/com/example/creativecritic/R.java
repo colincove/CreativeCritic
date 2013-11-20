@@ -25,7 +25,7 @@ public final class R {
     }
     public static final class id {
         public static final int MainScrollView=0x7f050010;
-        public static final int action_settings=0x7f05001b;
+        public static final int action_settings=0x7f05001c;
         public static final int categoryScrollView=0x7f050005;
         public static final int categoryTitleTextView=0x7f050002;
         public static final int commentEditText=0x7f050017;
@@ -50,6 +50,7 @@ public final class R {
         public static final int section_label=0x7f05001a;
         public static final int slashTextView=0x7f050018;
         public static final int startScreenListView=0x7f050013;
+        public static final int textView1=0x7f05001b;
         public static final int titleTextView=0x7f050011;
         public static final int userCommentsTextView=0x7f05000e;
     }
@@ -63,6 +64,8 @@ public final class R {
         public static final int fragment_in_depth_discussion_dummy=0x7f030006;
         public static final int fragment_lowest_detail_level_dummy=0x7f030007;
         public static final int fragment_score_create_dummy=0x7f030008;
+        public static final int review_item=0x7f030009;
+        public static final int review_item2=0x7f03000a;
     }
     public static final class menu {
         public static final int category_screen=0x7f080000;

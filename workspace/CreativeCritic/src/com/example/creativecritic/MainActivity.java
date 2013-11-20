@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements IResultListener, OnClickLi
 		// TODO Auto-generated method stub
 		if(v.getId() == R.id.findScoreButton)
 		{
-			Intent i = new Intent(this, ScoreCreate.class);
+			Intent i = new Intent(this, LowestDetailLevel.class);
 			startActivity(i);
 		
 		}

@@ -12,8 +12,8 @@ public class GetReviewsRequest extends Request {
 
 	public GetReviewsRequest(IResultListener resultListener,int category_id) {
 		super(resultListener);
-		nameValuePairs.add(new BasicNameValuePair("category_id", Integer.toString(category_id)));
-		nameValuePairs.add(new BasicNameValuePair("action", "get_reviews"));
+		nameValuePairs.add(new BasicNameValuePair("catagory_id", Integer.toString(category_id)));
+		nameValuePairs.add(new BasicNameValuePair("action", "get_catagory_reviews"));
 		this.url="http://www.covertstudios.ca/IAT381/mobile_services.php";
 	}
 	@Override
