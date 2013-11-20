@@ -35,6 +35,8 @@ public class ScoreCreate extends FragmentActivity implements
 	private Button scoreButton;
 	private TextView scoreTextView;
 	
+	private CreateCriticWebservices webservices;
+	
 	private float barValue;
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -185,6 +187,9 @@ public class ScoreCreate extends FragmentActivity implements
 		if(v.getId() == R.id.postScorebutton )
 		{
 			//call colin's method
+			String commentString = commentText.getText().toString();
+			webservices = CreateCriticWebservices.getInstance();
+			webservices.makeReview(this, , score, user_id, category_id)
 			
 		}
 		
