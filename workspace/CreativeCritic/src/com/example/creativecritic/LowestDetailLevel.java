@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.creativecritic.webservices.CategoryReview;
+import com.example.creativecritic.webservices.GetReviewsRequest;
 import com.example.creativecritic.webservices.GetReviewsResult;
 import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Request;
 import com.example.creativecritic.webservices.Result;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,13 +36,16 @@ import android.widget.TextView;
 
 public class LowestDetailLevel extends FragmentActivity implements
 		ActionBar.OnNavigationListener, OnClickListener, IResultListener {
-	
-	
+
+
 	private TextView titleText;
 	private TextView scoreText;
 	private EditText scoreComment;
 	private Button postScoreButton;
 	private ListView otherUserListView;
+	private GetReviewsResult getReviewsResult;
+	private Request getReviewsRequest;
+	private RetainedFragment workerFragment;
 	
 	private ArrayAdapter<CategoryReview> listAdapter;
 	private List<CategoryReview> category_list;
@@ -55,6 +62,22 @@ public class LowestDetailLevel extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lowest_detail_level);
+
+		Fragment oldFragmentTag = getSupportFragmentManager().findFragmentByTag("REVIEWTAG");
+		Fragment oldFragmentId = getSupportFragmentManager().findFragmentById(R.id.review_state_fragment);
+		
+		// First time init, create the UI.
+		
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content,
+                    new ReviewListFragment()).commit();
+            
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            Fragment  fragment  = new RetainedFragment();
+            fragmentTransaction.add(fragment, "REVIEWTAG");
+            fragmentTransaction.commit();
+        }
+		
 
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
@@ -80,18 +103,18 @@ public class LowestDetailLevel extends FragmentActivity implements
 		postScoreButton = (Button) findViewById(R.id.newScoreButton);
 		postScoreButton.setOnClickListener(this);
 		
-		otherUserListView = (ListView) findViewById(R.id.discussionPostsTextView);
+		/*otherUserListView = (ListView) findViewById(R.id.discussionPostsTextView);
+		if(getReviewsResult==null){
+			webservices = CreateCriticWebservices.getInstance();
+			//getReviewsRequest=webservices.getReviews(this, 8);
+			category_list =   new ArrayList<CategoryReview>();
+		}
 		
-		webservices = CreateCriticWebservices.getInstance();
-		
-		webservices.getReviews(this, 8);
-		
-		category_list =   new ArrayList<CategoryReview>();
 		//listAdapter = new ReviewsArrayAdapter(this, R.layout.review_item2, category_list);
 		listAdapter = new ArrayAdapter<CategoryReview>(this, R.layout.review_item2, category_list);
 
 		
-		otherUserListView.setAdapter(listAdapter);
+		otherUserListView.setAdapter(listAdapter);*/
 	}
 
 	/**
@@ -115,6 +138,7 @@ public class LowestDetailLevel extends FragmentActivity implements
 			getActionBar().setSelectedNavigationItem(
 					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
 		}
+		
 	}
 
 	@Override
@@ -122,6 +146,7 @@ public class LowestDetailLevel extends FragmentActivity implements
 		// Serialize the current dropdown position.
 		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
 				.getSelectedNavigationIndex());
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -185,10 +210,9 @@ public class LowestDetailLevel extends FragmentActivity implements
 	@Override
 	public void result(Result result) {
 		// TODO Auto-generated method stub
-		GetReviewsResult reviews = (GetReviewsResult) result;
-		//category_list.addAll();
+		GetReviewsResult getReviewsResult = (GetReviewsResult) result;
 		listAdapter.clear();
-		listAdapter.addAll(reviews.getReviews());
+		listAdapter.addAll(getReviewsResult.getReviews());
 	}
 
 	@Override
@@ -196,5 +220,75 @@ public class LowestDetailLevel extends FragmentActivity implements
 		// TODO Auto-generated method stub
 		
 	}
+	 public static class RetainedFragment extends Fragment {
+		 private static final String TAG = "REVIEWTAG";
+		 	private boolean hasCommunicated;
+	        /**
+	         * Fragment initialization.  We way we want to be retained and
+	         * start our thread.
+	         */
+		 	public boolean communicate(){
+		 	return hasCommunicated;
+		 	}
+		 	
+	        @Override
+	        public void onCreate(Bundle savedInstanceState) {
+	            super.onCreate(savedInstanceState);
+	            
+	            // Tell the framework to try to keep this fragment around
+	            // during a configuration change.
+	            setRetainInstance(true);
+	         
+	        }
 
+	        /**
+	         * This is called when the Fragment's Activity is ready to go, after
+	         * its content view has been installed; it is called both after
+	         * the initial fragment creation and after the fragment is re-attached
+	         * to a new activity.
+	         */
+	        @Override
+	        public void onActivityCreated(Bundle savedInstanceState) {
+	            super.onActivityCreated(savedInstanceState);
+	            setRetainInstance(true);
+	            
+	        }
+
+	        /**
+	         * This is called when the fragment is going away.  It is NOT called
+	         * when the fragment is being propagated between activity instances.
+	         */
+	        @Override
+	        public void onDestroy() {
+	            
+	            
+	            super.onDestroy();
+	        }
+
+	        /**
+	         * This is called right before the fragment is detached from its
+	         * current activity instance.
+	         */
+	        @Override
+	        public void onDetach() {
+	            // This fragment is being detached from its activity.  We need
+	            // to make sure its thread is not going to touch any activity
+	            // state after returning from this function.
+	          
+	            
+	            super.onDetach();
+	        }
+	        @Override
+	        public void onAttach(Activity activity){
+	        	super.onAttach(activity);
+	        }
+	        /**
+	         * API for our UI to restart the progress thread.
+	         */
+	        public void restart() {
+	           
+	        }
+	       
+	        
+	 }
 }

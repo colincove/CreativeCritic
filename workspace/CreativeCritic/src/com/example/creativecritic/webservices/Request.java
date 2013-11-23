@@ -15,6 +15,7 @@ public class Request {
 	protected String url;
 	private IResultListener resultListener;
 	private Looper looper;
+	private JSONObject jResult;
 	public Request(IResultListener resultListener){
 		this.resultListener = resultListener;
 		url="";
@@ -42,7 +43,17 @@ public class Request {
 		return resultListener;
 	}
 	public Result createResult(JSONObject jObj){
+		jResult=jObj;
 		return new Result(true, this);
+	}
+	public JSONObject getJSONResult(){
+		return jResult;
+	}
+	public String getJSONResultString(){
+		if(jResult==null){
+			return "";
+		}
+		return jResult.toString();
 	}
 	public Looper getLooper(){
 		return looper;
