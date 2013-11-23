@@ -51,6 +51,7 @@ function api_get_catagory_reviews(){
 }
 function api_make_review(){
 	global $con;
+	global $successResponse;
 	$result = make_review($con);
 	print $successResponse;
 }

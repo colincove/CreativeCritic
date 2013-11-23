@@ -41,6 +41,7 @@ public class LowestDetailLevel extends FragmentActivity implements
 	private ListView otherUserListView;
 	
 	private ArrayAdapter<CategoryReview> listAdapter;
+	private List<CategoryReview> category_list;
 	
 	private CreateCriticWebservices webservices;
 
@@ -85,7 +86,10 @@ public class LowestDetailLevel extends FragmentActivity implements
 		
 		webservices.getReviews(this, 8);
 		
-		listAdapter = new ArrayAdapter(this, R.layout.review_item2);
+		category_list =   new ArrayList<CategoryReview>();
+		//listAdapter = new ReviewsArrayAdapter(this, R.layout.review_item2, category_list);
+		listAdapter = new ArrayAdapter<CategoryReview>(this, R.layout.review_item2, category_list);
+
 		
 		otherUserListView.setAdapter(listAdapter);
 	}
@@ -182,14 +186,9 @@ public class LowestDetailLevel extends FragmentActivity implements
 	public void result(Result result) {
 		// TODO Auto-generated method stub
 		GetReviewsResult reviews = (GetReviewsResult) result;
-		
-		List<CategoryReview> catRev =  new ArrayList<CategoryReview>();
-		catRev.addAll(reviews.getReviews());
-		listAdapter = new ArrayAdapter(this, R.layout.review_item2, catRev);
-		
-		otherUserListView.setAdapter(listAdapter);
-//		listAdapter.clear();
-//		listAdapter.addAll(reviews.getReviews());
+		//category_list.addAll();
+		listAdapter.clear();
+		listAdapter.addAll(reviews.getReviews());
 	}
 
 	@Override

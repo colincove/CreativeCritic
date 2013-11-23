@@ -28,8 +28,6 @@
 <fullyQualifiedTypeName name="com.example.creativecritic.SubordinatesRequest"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.webservices.Request"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.SubordinatesResult"/>
-<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
-<fullyQualifiedTypeName name="android.widget.LinearLayout.LayoutParams"/>
 <fullyQualifiedTypeName name="android.view.ViewGroup.LayoutParams"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.SeekBar"/>
@@ -38,4 +36,17 @@
 <fullyQualifiedTypeName name="com.example.creativecritic.R.id"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.webservices.IResultListener"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="android.view.ViewGroup"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.R.layout"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout.LayoutParams"/>
+<fullyQualifiedTypeName name="android.widget.ListView"/>
+<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.ReviewsArrayAdapter"/>
+<fullyQualifiedTypeName name="android.os.Message"/>
+<fullyQualifiedTypeName name="android.os.Handler"/>
+<fullyQualifiedTypeName name="android.os.Bundle"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.webservices.MessageHandler"/>
+<fullyQualifiedTypeName name="android.os.Looper"/>
 </qualifiedTypeNameHistroy>
