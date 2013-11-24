@@ -1,0 +1,70 @@
+package com.example.creativecritic;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Result;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
+import android.widget.ArrayAdapter;
+
+public class FragmentListActivity<TList, TWorkerFragment, TListFragment> extends FragmentActivity implements IResultListener{
+	protected ArrayAdapter<TList> listAdapter;
+	protected TWorkerFragment workerFragment;
+	public static final String WORKER_TAG="worker_fragment";
+	
+	private Generic generic;
+	protected TListFragment listFragment;
+	protected CreateCriticWebservices webservices;
+	protected List<TList> category_list;
+
+	public FragmentListActivity(Generic generic) {
+		this.generic  = generic;
+	}
+	public ArrayAdapter<TList> getListAdapter(){
+		return listAdapter;
+	}
+	@Override
+	protected void onCreate(Bundle savedStateInstance){
+		super.onCreate(savedStateInstance);
+workerFragment = (TWorkerFragment)getSupportFragmentManager().findFragmentByTag(MyListFragment.TAG);
+listFragment = (TListFragment)getSupportFragmentManager().findFragmentByTag(WORKER_TAG);
+category_list =   new ArrayList<TList>();
+		// First time init, create the UI.
+listAdapter = new CategoryArrayAdapter<TList>(this, R.layout.review_item2, category_list);
+		
+        if (workerFragment == null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            try {
+				workerFragment  = (TWorkerFragment)generic.buildOne();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            fragmentTransaction.add((Fragment)workerFragment, WORKER_TAG);
+            fragmentTransaction.commit();
+        }
+webservices = CreateCriticWebservices.getInstance();
+		
+		
+	}
+	@Override
+	public void result(Result result) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void resultFail() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

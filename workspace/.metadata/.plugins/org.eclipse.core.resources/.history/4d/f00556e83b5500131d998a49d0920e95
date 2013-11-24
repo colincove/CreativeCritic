@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_list_item_hight">100dp</dimen>
+    
+    <color name="odd_background">#ffededed</color>
+     <color name="even_background">#ffe0e0e0</color>
+     
+     <item type="id" name="item_background" />
+</resources>

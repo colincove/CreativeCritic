@@ -1,0 +1,34 @@
+package com.example.creativecritic;
+
+import java.util.List;
+
+import android.content.Context;
+import android.widget.ArrayAdapter;
+
+public class CategoryArrayAdapter<Category> extends ArrayAdapter<Category> {
+
+	public CategoryArrayAdapter(Context context, int resource) {
+		super(context, resource);
+		// TODO Auto-generated constructor stub
+	}
+
+	public CategoryArrayAdapter(Context context, int resource,
+			int textViewResourceId) {
+		super(context, resource, textViewResourceId);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public CategoryArrayAdapter(Context context, int resource, List<Category> objects) {
+		super(context, resource, objects);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public CategoryArrayAdapter(Context context, int resource,
+			int textViewResourceId, List<Category> objects) {
+		super(context, resource, textViewResourceId, objects);
+		// TODO Auto-generated constructor stub
+	}
+
+}

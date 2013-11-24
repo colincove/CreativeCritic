@@ -1,0 +1,45 @@
+package com.example.creativecritic;
+
+import com.example.creativecritic.CategoryScreen.RetainedFragment;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.ArrayAdapter;
+
+public class FragmentListActivity<ListType, WorkerFragment> extends FragmentActivity {
+	protected ArrayAdapter<ListType> listAdapter;
+	protected WorkerFragment workerFragment;
+	public static final String WORKER_TAG="worker_fragment";
+	private Generic,WorkerFragment. generic;
+	public FragmentListActivity(Generic generic) {
+		this.generic  = generic;
+	}
+	public ArrayAdapter<ListType> getListAdapter(){
+		return listAdapter;
+	}
+	protected void onCreate(Bundle savedStateInstance){
+		super.onCreate(savedStateInstance);
+workerFragment = (WorkerFragment)getSupportFragmentManager().findFragmentByTag(WORKER_TAG);
+		
+		// First time init, create the UI.
+		
+		
+        if (workerFragment == null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            try {
+				workerFragment  = generic.buildOne();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            fragmentTransaction.add((Fragment)workerFragment, WORKER_TAG);
+            fragmentTransaction.commit();
+        }
+	}
+
+}

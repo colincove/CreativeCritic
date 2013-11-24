@@ -1,12 +1,23 @@
 package com.example.creativecritic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.creativecritic.LowestDetailLevel.RetainedFragment;
+import com.example.creativecritic.webservices.CategoryReview;
+import com.example.creativecritic.webservices.GetReviewsResult;
+import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Result;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,23 +25,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
-public class CategoryScreen extends FragmentActivity implements
+public class CategoryScreen extends FragmentListActivity<Category, CategoryScreen.CategoryDataFragment> implements
 		ActionBar.OnNavigationListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
 	 */
+	
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
+
+	private SubordinatesRequest request;
+	public CategoryScreen(){
+		super(new Generic<CategoryDataFragment>(CategoryDataFragment.class));
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category_screen);
 
+		listAdapter = new CategoryArrayAdapter<Category>(this,
+				R.layout.review_item2, category_list);
+		//
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -47,8 +70,16 @@ public class CategoryScreen extends FragmentActivity implements
 								getString(R.string.title_section1),
 								getString(R.string.title_section2),
 								getString(R.string.title_section3), }), this);
+	
+	if(workerFragment.getCurrentData()==null){
+		workerFragment.setCategoryId(1);
+		request=(SubordinatesRequest)webservices.requestSubordinates(this, workerFragment.getCategoryId());
+	}else{
+		result(workerFragment.getCurrentData());
 	}
-
+	this.getActionBar();
+	
+	}
 	/**
 	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
 	 * simply returns the {@link android.app.Activity} if
@@ -143,4 +174,76 @@ public class CategoryScreen extends FragmentActivity implements
 		}
 	}
 
+		@Override
+		public void result(Result result) {
+			super.result(result);
+			// TODO Auto-generated method stub
+			SubordinatesResult subordinateResult = (SubordinatesResult) result;
+			workerFragment.pushResult(subordinateResult);
+			listAdapter.clear();
+			listAdapter.addAll(subordinateResult.getList());
+			listFragment.setListShown(true);
+		}
+	@Override
+	public void resultFail() {
+		// TODO Auto-generated method stub
+		
+	}
+	 public static class CategoryDataFragment extends Fragment {
+		 private static final String TAG = "CATEGORY_DATA";
+		 private List<SubordinatesResult> results;
+		 private int category_id=-1;
+
+	        public CategoryDataFragment(){
+	        	results=new ArrayList<SubordinatesResult>();
+	        }
+	        public void onCreate(Bundle savedInstanceState) {
+	            super.onCreate(savedInstanceState);
+	            
+	            // Tell the framework to try to keep this fragment around
+	            // during a configuration change.
+	            setRetainInstance(true);
+	         
+	        }
+	        public void pushResult(SubordinatesResult result){
+	        	results.add(result);
+	        }
+	        public SubordinatesResult pop(SubordinatesResult result){
+	        	if(results.size()==0)return null;
+	        	SubordinatesResult returnItem=results.get(results.size()-1);
+	        	results.remove(returnItem);
+	        	return returnItem;
+	        }
+	       public SubordinatesResult getCurrentData(){
+	    	   if(results.size()==0)return null;
+	        	return results.get(results.size()-1);
+	       }
+	       public int getCategoryId(){
+	    	   return category_id;
+	       }
+	       public void setCategoryId(int value){
+	    	   category_id=value;
+	       }
+	        
+	 }
+
+	@Override
+	public void onItemClick(AdapterView parent, View v, int position, long id) {
+		// TODO Auto-generated method stub
+		Category item = category_list.get(position);
+		if(item!=null){
+			boolean hasChildren=item.hasChildren();
+			if(hasChildren){
+				listFragment.setListShown(false);
+				request=(SubordinatesRequest)webservices.requestSubordinates(this, item.getId());
+			}else{
+				Intent intent = new Intent(getBaseContext(), LowestDetailLevel.class);
+				intent.putExtra("category_id", item.getId());
+				startActivity(intent);
+			}
+		}
+		
+	}
+
 }
+

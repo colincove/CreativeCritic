@@ -4,15 +4,28 @@ public class Category {
 	private String name;
 	private int id;
 	private int score;
-	public Category(String name, int id) {
+	private int rgt;
+	private int lft;
+	public Category(String name, int id, int rgt, int lft) {
 		// TODO Auto-generated constructor stub
 		this.name=name;
 		this.id=id;
+		this.lft=lft;
+		this.rgt=rgt;
 	}
 	public String getName(){
 	return name;
 	}
 	public int getId(){
 		return id;
+	}
+	public boolean hasChildren(){
+		return rgt-lft>1;
+	}
+	public int getRgt(){
+		return rgt;
+	}
+	public int getLft(){
+		return lft;
 	}
 }

@@ -1,0 +1,78 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LowestDetailLevel"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/inDepthTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/inDepthScoreNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inDepthTitleTextView"
+            android:layout_marginTop="42dp"
+            android:layout_toRightOf="@+id/newScoreButton"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/userCommentsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/inDepthScoreNumberTextView"
+            android:layout_alignBottom="@+id/inDepthScoreNumberTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/newScoreButton"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="none"
+            android:maxLines="3" >
+
+            <requestFocus />
+        </EditText>
+
+
+
+         <!--    <ListView
+                android:id="@+id/discussionPostsTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:background="@color/base">
+            </ListView>--> 
+
+
+        <Button
+            android:id="@+id/newScoreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inDepthScoreNumberTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="34dp"
+            android:text="Post a Score" />
+        <fragment android:name = "com.example.creativecritic.ReviewListFragment"
+            android:id = "@+id/list_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            </fragment>
+
+    </LinearLayout>
+
+</FrameLayout>

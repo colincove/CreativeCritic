@@ -10,9 +10,11 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class ReviewListFragment extends ListFragment {
-
+	private LowestDetailLevel myActivity;
+	private ListView listView;
 	public ReviewListFragment() {
 		// TODO Auto-generated constructor stub
 	}
@@ -22,7 +24,7 @@ public class ReviewListFragment extends ListFragment {
      public View onCreateView(LayoutInflater inflater, ViewGroup container,
              Bundle savedInstanceState) {
         // View v = inflater.inflate(R.layout.reviews_list_fragment, container, false);
-
+    	 
       
          return super.onCreateView(inflater, container, savedInstanceState);
      }
@@ -32,7 +34,12 @@ public class ReviewListFragment extends ListFragment {
          super.onActivityCreated(savedInstanceState);
          
          FragmentManager fm = getActivity().getSupportFragmentManager();
-
+         fm.getClass();
+         myActivity = (LowestDetailLevel)getActivity();
+         listView= getListView();
+         
+         listView.setAdapter(myActivity.getListAdapter());
+        
        /*  // Check to see if we have retained the worker fragment.
          mWorkFragment = (RetainedFragment)fm.findFragmentByTag("work");
 

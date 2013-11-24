@@ -15,7 +15,7 @@ function make_query($con) {
 /////////////////////////////////// VIEW CATAGORY TREE ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 function get_subordinates($con) {
-    $query = sprintf("SELECT node.category_id, node.name, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
+    $query = sprintf("SELECT node.category_id, node.lft, node.rgt,node.name, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
 FROM nested_category AS node,
         nested_category AS parent,
         nested_category AS sub_parent,

@@ -1,0 +1,234 @@
+package com.example.creativecritic;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.creativecritic.CategoryScreen.CategoryDataFragment;
+import com.example.creativecritic.webservices.CategoryReview;
+import com.example.creativecritic.webservices.GetReviewsRequest;
+import com.example.creativecritic.webservices.GetReviewsResult;
+import com.example.creativecritic.webservices.IResultListener;
+import com.example.creativecritic.webservices.Request;
+import com.example.creativecritic.webservices.Result;
+
+import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.os.Bundle;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class LowestDetailLevel extends FragmentListActivity<CategoryReview, LowestDetailLevel.RetainedFragment> implements
+		ActionBar.OnNavigationListener, OnClickListener {
+
+
+	private TextView titleText;
+	private TextView scoreText;
+	private EditText scoreComment;
+	private Button postScoreButton;
+	private GetReviewsResult getReviewsResult;
+	private Request getReviewsRequest;
+	/**
+	 * The serialization (saved instance state) Bundle key representing the
+	 * current dropdown position.w
+	 */
+	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	public LowestDetailLevel(){
+		super(new Generic<RetainedFragment>(RetainedFragment.class));
+	}
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_lowest_detail_level);
+
+		// Set up the action bar to show a dropdown list.
+		final ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		// Set up the dropdown list navigation in the action bar.
+		actionBar.setListNavigationCallbacks(
+		// Specify a SpinnerAdapter to populate the dropdown list.
+				new ArrayAdapter<String>(getActionBarThemedContextCompat(),
+						android.R.layout.simple_list_item_1,
+						android.R.id.text1, new String[] {
+								getString(R.string.title_section1),
+								getString(R.string.title_section2),
+								getString(R.string.title_section3), }), this);
+		
+		titleText = (TextView) findViewById(R.id.inDepthTitleTextView);
+		
+		scoreText = (TextView) findViewById(R.id.inDepthScoreNumberTextView);
+		
+		scoreComment = (EditText) findViewById(R.id.userCommentsTextView);
+		
+		postScoreButton = (Button) findViewById(R.id.newScoreButton);
+		postScoreButton.setOnClickListener(this);
+
+		
+		if(workerFragment.getLastResult()==null){
+			getReviewsRequest=webservices.getReviews(this, 8);
+		}else{
+			result(workerFragment.getLastResult());
+		}
+		
+	}
+	public ArrayAdapter<CategoryReview> getListAdapter(){
+		return listAdapter;
+	}
+	/**
+	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
+	 * simply returns the {@link android.app.Activity} if
+	 * <code>getThemedContext</code> is unavailable.
+	 */
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	private Context getActionBarThemedContextCompat() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			return getActionBar().getThemedContext();
+		} else {
+			return this;
+		}
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		// Restore the previously serialized current dropdown position.
+		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
+			getActionBar().setSelectedNavigationItem(
+					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
+		}
+		
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// Serialize the current dropdown position.
+		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
+				.getSelectedNavigationIndex());
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.lowest_detail_level, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int position, long id) {
+		// When the given dropdown item is selected, show its contents in the
+		// container view.
+		Fragment fragment = new DummySectionFragment();
+		Bundle args = new Bundle();
+		args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+		fragment.setArguments(args);
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.container, fragment).commit();
+		return true;
+	}
+
+	/**
+	 * A dummy fragment representing a section of the app, but that simply
+	 * displays dummy text.
+	 */
+	public static class DummySectionFragment extends Fragment {
+		/**
+		 * The fragment argument representing the section number for this
+		 * fragment.
+		 */
+		public static final String ARG_SECTION_NUMBER = "section_number";
+
+		public DummySectionFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(
+					R.layout.fragment_lowest_detail_level_dummy, container,
+					false);
+			TextView dummyTextView = (TextView) rootView
+					.findViewById(R.id.section_label);
+			dummyTextView.setText(Integer.toString(getArguments().getInt(
+					ARG_SECTION_NUMBER)));
+			return rootView;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if(v.getId() == R.id.newScoreButton)
+		{
+			Intent i = new Intent(this, ScoreCreate.class);
+			startActivity(i);
+		}
+	}
+
+	@Override
+	public void result(Result result) {
+		super.result(result);
+		// TODO Auto-generated method stub
+		GetReviewsResult getReviewsResult = (GetReviewsResult) result;
+		workerFragment.setLastResult(result);
+		listAdapter.clear();
+		listAdapter.addAll(getReviewsResult.getReviews());
+		listFragment.setListShown(true);
+	}
+
+	@Override
+	public void resultFail() {
+		// TODO Auto-generated method stub
+		
+	}
+	 public static class RetainedFragment extends Fragment {
+		 private static final String TAG = "REVIEWTAG";
+		 	private boolean hasCommunicated;
+		 	private Result lastResult;
+	        /**
+	         * Fragment initialization.  We way we want to be retained and
+	         * start our thread.
+	         */
+		 	public boolean communicate(){
+		 	return hasCommunicated;
+		 	}
+		 	
+	        @Override
+	        public void onCreate(Bundle savedInstanceState) {
+	            super.onCreate(savedInstanceState);
+	            
+	            // Tell the framework to try to keep this fragment around
+	            // during a configuration change.
+	            setRetainInstance(true);
+	         
+	        }
+	        public void setLastResult(Result result){
+	        	lastResult = result;
+	        }
+	        public Result getLastResult(){
+	        	return lastResult;
+	        }
+	       
+	        
+	 }
+}

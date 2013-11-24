@@ -1,0 +1,9 @@
+package com.example.creativecritic;
+
+public class Generic {
+
+	public Generic() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

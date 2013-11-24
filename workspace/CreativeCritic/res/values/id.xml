@@ -5,4 +5,5 @@
         name="list_layout" />
     <item type="id"
         name="review_state_fragment" />
+    <item type="id" name="list_fragment" />
 </resources>

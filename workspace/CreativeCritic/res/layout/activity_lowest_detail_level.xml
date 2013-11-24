@@ -66,6 +66,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="34dp"
             android:text="Post a Score" />
+     <fragment android:name = "com.example.creativecritic.MyListFragment"
+            android:id = "@id/list_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            </fragment>
 
     </LinearLayout>
 

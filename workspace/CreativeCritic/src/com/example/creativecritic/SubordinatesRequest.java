@@ -30,7 +30,10 @@ public class SubordinatesRequest extends Request {
 			JSONObject categoryData;
 			for(int i=0;i<categoryList.length();i++){
 				categoryData=categoryList.getJSONObject(i);
-				list.add(new Category(categoryData.getString("name"), categoryData.getInt("category_id")));
+				list.add(new Category(categoryData.getString("name"), 
+						categoryData.getInt("category_id"),
+						categoryData.getInt("rgt"),
+						categoryData.getInt("lft")));
 			}
 			return new SubordinatesResult(true, this, list);
 		} catch (JSONException e) {

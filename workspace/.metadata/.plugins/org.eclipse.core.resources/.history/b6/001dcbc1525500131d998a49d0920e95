@@ -1,0 +1,11 @@
+package com.example.creativecritic;
+
+import android.support.v4.app.ListFragment;
+
+public class MyListFragment extends ListFragment {
+
+	public MyListFragment() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

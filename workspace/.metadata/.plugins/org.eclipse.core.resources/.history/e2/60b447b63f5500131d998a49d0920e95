@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_list_item_hight">120dp</dimen>
+    <dimen name="large_text">50sp</dimen>
+    <dimen name="large_text_width">200dp</dimen>
+    
+    
+    <color name="odd_background">#ffededed</color>
+     <color name="even_background">#ffe0e0e0</color>
+     
+     <item type="id" name="item_background" />
+     <item type="id" name="score" />
+     <item type="id" name="body_text"/>
+</resources>

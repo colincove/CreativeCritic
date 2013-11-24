@@ -1,0 +1,33 @@
+package com.example.creativecritic;
+
+import java.util.List;
+
+import android.content.Context;
+import android.widget.ArrayAdapter;
+
+public class ReviewArrayAdapter<CategoryReview> extends ArrayAdapter<T> {
+
+	public ReviewArrayAdapter(Context context, int resource) {
+		super(context, resource);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ReviewArrayAdapter(Context context, int resource,
+			int textViewResourceId) {
+		super(context, resource, textViewResourceId);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public ReviewArrayAdapter(Context context, int resource, List<T> objects) {
+		super(context, resource, objects);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ReviewArrayAdapter(Context context, int resource,
+			int textViewResourceId, List<T> objects) {
+		super(context, resource, textViewResourceId, objects);
+		// TODO Auto-generated constructor stub
+	}
+
+}
