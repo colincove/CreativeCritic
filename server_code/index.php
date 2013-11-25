@@ -79,6 +79,11 @@
             <input type='submit' name='get_catagory_reviews' value='Get Catagory Reviews'></input>
             <input type='text' name='catagory_id' value='ID'></input>
          </form>
+         <form id='get_avg_score' action='developer_services.php' method='post'>
+            <input type='submit' name='get_avg_score' value='Get Catagory Avg'></input>
+            <input type='text' name='catagory_id' value='ID'></input>
+            <input type="hidden" name="action" value="get_avg_score"></input>
+         </form>
           <h3>Insert Review</h3>
          <form id='review' action='developer_services.php' method='post'>
             <input type='submit' name='make_review'></input>

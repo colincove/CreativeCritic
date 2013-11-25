@@ -15,7 +15,7 @@ function make_query($con) {
 /////////////////////////////////// VIEW CATAGORY TREE ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 function get_subordinates($con) {
-    $query = sprintf("SELECT node.category_id, node.lft, node.rgt,node.name, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
+    $query = sprintf("SELECT node.category_id, node.lft, node.rgt,node.name,node.avg_score, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
 FROM nested_category AS node,
         nested_category AS parent,
         nested_category AS sub_parent,
@@ -47,6 +47,7 @@ function get_tree($con) {
 function get_nested_tree($con) {
     $query = sprintf("SELECT (COUNT(parent.name) - 1) AS depth, 
     CONCAT( REPEAT(' ', COUNT(parent.name) - 1), node.name) AS name,
+    CONCAT( REPEAT(' ', COUNT(parent.name) - 1), node.avg_score) AS avg_score,
     CONCAT( REPEAT(' ', COUNT(parent.category_id) - 1), node.category_id) AS category_id
 FROM nested_category AS node,
         nested_category AS parent
@@ -110,6 +111,7 @@ function make_review($con) {
 		mysql_real_escape_string($_POST['user_id']),
 		mysql_real_escape_string($_POST['category_id']));
     $result = mysql_query($query, $con) or die(mysql_error());
+    update_score($con);
     return $result;
 }
 
@@ -124,6 +126,35 @@ function get_catagory_reviews($con) {
     $result = mysql_query($query, $con) or die(mysql_error());
     return $result;
 }
+function update_score($con){
+    $query = sprintf("SELECT AVG(score) FROM scored_review WHERE category_id=%s", 
+        mysql_real_escape_string($_POST['category_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    $row = mysql_fetch_assoc($result);
+    $query = sprintf("UPDATE nested_category SET avg_score=%s WHERE category_id=%s", 
+        mysql_real_escape_string($row["AVG(score)"]), 
+         mysql_real_escape_string($_POST['category_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    return $result;
+}
+function get_avg_score_int($con, $category_id)
+{
+    $result = get_avg_score($con, $category_id);
+    $row = mysql_fetch_assoc($result);
+    return $row["AVG(node.avg_score)"];
+}
+function get_avg_score($con, $category_id){
+    $query  = sprintf("SELECT AVG(node.avg_score)
+FROM nested_category AS node,
+        nested_category AS parent
+WHERE node.lft BETWEEN parent.lft AND parent.rgt
+        AND parent.category_id= %s
+AND node.rgt = node.lft+1;",
+         mysql_real_escape_string($category_id));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    return $result;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// USERS ///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////

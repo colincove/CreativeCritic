@@ -37,7 +37,8 @@ switch($_POST['action']){
 function api_get_subordinates(){
 	global $con;
 	$result = get_subordinates($con);
-	exportResult($result);
+	//exportResult($result);
+	exportCategoryResult($result);
 }
 function api_get_path(){
 	global $con;
@@ -103,6 +104,19 @@ function exportResult($result){
 	$rows = array();
 	while($r = mysql_fetch_assoc($result)) {
    		 $rows[] = $r;
+	}
+	$export['status']=1;
+	$export['data']=$rows;
+	print json_encode($export);
+}
+function exportCategoryResult($result){
+	global $con;
+	$export;
+	$rows = array();
+	while($r = mysql_fetch_assoc($result)) {
+		$r["avg_score"] = get_avg_score_int($con, $r["category_id"]);
+   		 $rows[] = $r;
+
 	}
 	$export['status']=1;
 	$export['data']=$rows;
