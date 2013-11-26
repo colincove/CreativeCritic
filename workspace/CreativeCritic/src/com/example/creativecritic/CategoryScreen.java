@@ -41,8 +41,10 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 	
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
-
+	private List<CategoryPathNode> pathList;
 	private SubordinatesRequest request;
+	private  ActionBar actionBar;
+	private ArrayAdapter<CategoryPathNode> dropDownAdapter;
 	public CategoryScreen(){
 		super(new Generic<CategoryDataFragment>(CategoryDataFragment.class));
 	}
@@ -55,21 +57,19 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 				R.layout.review_item2, category_list);
 		//
 		// Set up the action bar to show a dropdown list.
-		final ActionBar actionBar = getActionBar();
+		actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		// Show the Up button in the action bar.
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+		
+		dropDownAdapter = new ArrayAdapter<CategoryPathNode>(getActionBarThemedContextCompat(),
+				android.R.layout.simple_list_item_1,
+				android.R.id.text1, new ArrayList<CategoryPathNode>());
 		// Set up the dropdown list navigation in the action bar.
 		actionBar.setListNavigationCallbacks(
 		// Specify a SpinnerAdapter to populate the dropdown list.
-				new ArrayAdapter<String>(getActionBarThemedContextCompat(),
-						android.R.layout.simple_list_item_1,
-						android.R.id.text1, new String[] {
-								getString(R.string.title_section1),
-								getString(R.string.title_section2),
-								getString(R.string.title_section3), }), this);
+				dropDownAdapter,this);
 	
 	if(workerFragment.getCurrentData()==null){
 		workerFragment.setCategoryId(1);
@@ -133,17 +133,34 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	public void onBackPressed(){
+		List<CategoryPathNode> path = workerFragment.getCurrentData().getPath();
+		if(path.size()>1){
+			
+			int back_id =path.get(path.size()-2).getCategoryId();
+			request=(SubordinatesRequest)webservices.requestSubordinates(this, back_id);
+			//request=(SubordinatesRequest)webservices.requestSubordinates(this, workerFragment.getPreviouseId());
+		}else{
+			super.onBackPressed();
+		}
+	}
+	private int oldPosition=0;
 	@Override
 	public boolean onNavigationItemSelected(int position, long id) {
 		// When the given dropdown item is selected, show its contents in the
 		// container view.
+		
 		Fragment fragment = new DummySectionFragment();
 		Bundle args = new Bundle();
 		args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 		fragment.setArguments(args);
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.container, fragment).commit();
+		if(position!=oldPosition){
+			listFragment.setListShown(false);
+			request=(SubordinatesRequest)webservices.requestSubordinates(this, dropDownAdapter.getItem(position).getCategoryId());
+			
+		}
 		return true;
 	}
 
@@ -177,12 +194,20 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 		@Override
 		public void result(Result result) {
 			super.result(result);
+			if(result.getStatus()){
+				
+			
 			// TODO Auto-generated method stub
 			SubordinatesResult subordinateResult = (SubordinatesResult) result;
 			workerFragment.pushResult(subordinateResult);
 			listAdapter.clear();
 			listAdapter.addAll(subordinateResult.getList());
 			listFragment.setListShown(true);
+			
+			dropDownAdapter.clear();
+			dropDownAdapter.addAll(subordinateResult.getPath());
+			
+		}
 		}
 	@Override
 	public void resultFail() {
@@ -223,6 +248,12 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 	       }
 	       public void setCategoryId(int value){
 	    	   category_id=value;
+	       }
+	       public int getPreviouseId(){
+	    	   SubordinatesResult result = results.get(results.size()-2);
+	    	   if(result==null)return -1;
+	    	   
+	    	   return result.getSelected().getId(); 
 	       }
 	        
 	 }

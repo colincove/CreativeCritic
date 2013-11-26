@@ -34,7 +34,7 @@ WHERE node.lft BETWEEN parent.lft AND parent.rgt
 GROUP BY node.category_id
 HAVING depth <= 1
 ORDER BY node.lft;
-", mysql_real_escape_string($_POST['node_id']));
+", mysql_real_escape_string($_POST['category_id']));
     $result = mysql_query($query, $con) or die(mysql_error());
     
     return $result;

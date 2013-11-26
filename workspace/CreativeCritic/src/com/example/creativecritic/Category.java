@@ -3,15 +3,19 @@ package com.example.creativecritic;
 public class Category {
 	private String name;
 	private int id;
-	private int score;
+	private float score;
 	private int rgt;
 	private int lft;
-	public Category(String name, int id, int rgt, int lft) {
+	public Category(String name, float score, int id, int rgt, int lft) {
 		// TODO Auto-generated constructor stub
 		this.name=name;
 		this.id=id;
 		this.lft=lft;
 		this.rgt=rgt;
+		this.score=score;
+	}
+	public float getScore(){
+		return score;
 	}
 	public String getName(){
 	return name;

@@ -24,7 +24,7 @@
         
           <form id='get_subordinates' action='developer_services.php' method='post'>
             <input type='submit' name='get_subordinates' value='Get Subordinates'></input>
-             <input type='text' name='node_id' value='ID'></input>
+             <input type='text' name='category_id' value='ID'></input>
          </form>
          <form id='get_path' action='developer_services.php' method='post'>
             <input type='submit' name='get_path' value='Get Path'></input>
@@ -34,7 +34,7 @@
 		 <h2>App API</h2>
 		 <form id='get_subordinates' action='mobile_services.php' method='post'>
             <input type='submit' name='get_subordinates' value='Get Subordinates'></input>
-             <input type='text' name='node_id' value='ID'></input>
+             <input type='text' name='category_id' value='ID'></input>
 			 <input type="hidden" name="action" value="get_subordinates"></input>
          </form>
 		 <form id='get_path' action='mobile_services.php' method='post'>

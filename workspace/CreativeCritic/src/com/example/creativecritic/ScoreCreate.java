@@ -34,6 +34,7 @@ public class ScoreCreate extends FragmentActivity implements
 	private EditText commentText;
 	private Button scoreButton;
 	private TextView scoreTextView;
+	private int category_id;
 	
 	private CreateCriticWebservices webservices;
 	
@@ -75,6 +76,11 @@ public class ScoreCreate extends FragmentActivity implements
 		scoreSelectBar.setOnSeekBarChangeListener(this);
 		
 		scoreButton.setOnClickListener(this);
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    category_id = extras.getInt("category_id");
+		}
 		
 	}
 
@@ -190,10 +196,8 @@ public class ScoreCreate extends FragmentActivity implements
 			String commentString = commentText.getText().toString();
 			int b = (int)barValue;
 			webservices = CreateCriticWebservices.getInstance();
-			webservices.makeReview(this, commentString	, b , 9 , 8);
-			
+			webservices.makeReview(this, commentString	, b , User.currentUser.getId(), category_id);
 		}
-		
 	}
 
 	@Override

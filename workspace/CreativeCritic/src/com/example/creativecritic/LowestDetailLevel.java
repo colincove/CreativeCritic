@@ -47,6 +47,7 @@ public class LowestDetailLevel extends FragmentListActivity<CategoryReview, Lowe
 	private Button postScoreButton;
 	private GetReviewsResult getReviewsResult;
 	private Request getReviewsRequest;
+	private int category_id;
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.w
@@ -90,8 +91,9 @@ public class LowestDetailLevel extends FragmentListActivity<CategoryReview, Lowe
 		if(workerFragment.getLastResult()==null){
 			Bundle extras = getIntent().getExtras();
 			if (extras != null) {
-			    int value = extras.getInt("category_id");
-			    getReviewsRequest=webservices.getReviews(this, value);
+				category_id = extras.getInt("category_id");
+			    
+			    getReviewsRequest=webservices.getReviews(this, category_id);
 			}else{
 				getReviewsRequest=webservices.getReviews(this, 8);
 			}
@@ -187,6 +189,7 @@ public class LowestDetailLevel extends FragmentListActivity<CategoryReview, Lowe
 		if(v.getId() == R.id.newScoreButton)
 		{
 			Intent i = new Intent(this, ScoreCreate.class);
+			i.putExtra("category_id",category_id);
 			startActivity(i);
 		}
 	}

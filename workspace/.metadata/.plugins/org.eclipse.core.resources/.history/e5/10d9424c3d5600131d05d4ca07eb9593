@@ -1,0 +1,24 @@
+package com.example.creativecritic;
+
+import java.util.List;
+
+import com.example.creativecritic.webservices.Request;
+import com.example.creativecritic.webservices.Result;
+
+public class SubordinatesResult extends Result {
+	private List<Category> list;
+	private List<CategoryPathNode> path;
+	private Category selected;
+	public SubordinatesResult( boolean status, selected,Request requestId, List<Category> list,List<CategoryPathNode> path) {
+		super(status, requestId);
+		this.list=list;
+		this.path=path;
+		// TODO Auto-generated constructor stub
+	}
+	public List<Category> getList(){
+		return list;
+	}
+	public List<CategoryPathNode> getPath(){
+		return path;
+	}
+}

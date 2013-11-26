@@ -29,7 +29,7 @@ public class MainActivity extends Activity implements IResultListener, OnClickLi
 		setContentView(R.layout.activity_main);
 		webservices = CreateCriticWebservices.getInstance();
 		userLoginRequest=webservices.requestUserFromEmail(this);
-		getSubordinatedRequest=webservices.requestSubordinates(this, 2);
+		//getSubordinatedRequest=webservices.requestSubordinates(this, 2);
 		
 		listLayout=(LinearLayout)findViewById(R.id.list_layout);
 		
@@ -51,6 +51,10 @@ public class MainActivity extends Activity implements IResultListener, OnClickLi
 		// TODO Auto-generated method stub
 		if(result.getRequest()==getSubordinatedRequest){
 			handleListResult((SubordinatesResult)result);
+		}
+		if(result.getRequest()==userLoginRequest){
+			UserLoginResult user_result = (UserLoginResult)result;
+			User.currentUser=user_result.getUser();
 		}
 	}
 

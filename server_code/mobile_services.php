@@ -113,13 +113,18 @@ function exportCategoryResult($result){
 	global $con;
 	$export;
 	$rows = array();
+	$paths =array();
 	while($r = mysql_fetch_assoc($result)) {
 		$r["avg_score"] = get_avg_score_int($con, $r["category_id"]);
    		 $rows[] = $r;
-
+	}
+	$pathResult=get_path($con);
+	while($r = mysql_fetch_assoc($pathResult)) {
+   		 $paths[] = $r;
 	}
 	$export['status']=1;
 	$export['data']=$rows;
+	$export['path'] = $paths;
 	print json_encode($export);
 }
 ?>

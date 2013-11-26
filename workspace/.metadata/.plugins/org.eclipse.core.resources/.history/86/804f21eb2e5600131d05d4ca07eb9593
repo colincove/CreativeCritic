@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="@+dimen/standard_list_item_hight"
+    android:layout_width="fill_parent"
+    android:orientation="horizontal"
+    android:id="@id/item_background" >
+    <TextView
+    android:textSize="@dimen/large_text"
+    android:paddingLeft="@dimen/standard_padding"
+      android:layout_width="@dimen/large_text_width"
+        android:layout_height="@+dimen/standard_list_item_hight"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical"
+    android:id="@id/score"
+    />
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/body_text"
+    android:textSize="@dimen/large_text"
+    />
+</LinearLayout>

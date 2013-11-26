@@ -7,12 +7,22 @@ import com.example.creativecritic.webservices.Result;
 
 public class SubordinatesResult extends Result {
 	private List<Category> list;
-	public SubordinatesResult( boolean status, Request requestId, List<Category> list) {
+	private List<CategoryPathNode> path;
+	private Category selected;
+	public SubordinatesResult( boolean status, Category selected,Request requestId, List<Category> list,List<CategoryPathNode> path) {
 		super(status, requestId);
 		this.list=list;
+		this.path=path;
+		this.selected=selected;
 		// TODO Auto-generated constructor stub
 	}
 	public List<Category> getList(){
 		return list;
+	}
+	public List<CategoryPathNode> getPath(){
+		return path;
+	}
+	public Category getSelected(){
+		return selected;
 	}
 }

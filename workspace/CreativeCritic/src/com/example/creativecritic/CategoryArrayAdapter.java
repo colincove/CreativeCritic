@@ -39,7 +39,7 @@ public class CategoryArrayAdapter<T> extends ArrayAdapter<T> {
 		if(convertView==null){
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.category_item, null);
 		}
-		
+		TextView scoreView= (TextView) convertView.findViewById(R.id.score); 
 		View bg = convertView.findViewById(R.id.item_background);
 		TextView bodyText = (TextView) convertView.findViewById(R.id.body_text);
 		Category item = (Category) this.getItem(position);
@@ -51,6 +51,7 @@ public class CategoryArrayAdapter<T> extends ArrayAdapter<T> {
 		}
 		
 		bodyText.setText(item.getName());
+		scoreView.setText(Integer.toString((int)item.getScore()));
 		
 		return convertView;
 	}
