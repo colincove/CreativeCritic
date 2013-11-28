@@ -1,0 +1,44 @@
+package com.example.creativecritic;
+
+
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+public class SquareImageView extends ImageView {
+	private static final float RATIO = 4f / 4f;
+	public SquareImageView(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SquareImageView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+	}
+
+	public SquareImageView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		// TODO Auto-generated constructor stub
+	}
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		 int width = getMeasuredWidth();
+		    int height = getMeasuredHeight();
+		    int widthWithoutPadding = width - getPaddingLeft() - getPaddingRight();
+		    int heigthWithoutPadding = height - getPaddingTop() - getPaddingBottom();
+		 
+		    int maxWidth = (int) (heigthWithoutPadding * RATIO);
+		    int maxHeight = (int) (widthWithoutPadding / RATIO);
+		    if (widthWithoutPadding  < maxWidth) {
+		        width = maxWidth + getPaddingLeft() + getPaddingRight();
+		    } else {
+		        height = maxHeight + getPaddingTop() + getPaddingBottom();
+		    }
+		 
+		    setMeasuredDimension(width, height);
+	     
+	}
+
+}

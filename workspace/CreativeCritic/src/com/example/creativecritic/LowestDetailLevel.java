@@ -103,6 +103,12 @@ public class LowestDetailLevel extends FragmentListActivity<CategoryReview, Lowe
 		}
 		
 	}
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		super.onActivityResult(requestCode,resultCode,  data);
+		if(resultCode==RESULT_OK){
+			getReviewsRequest=webservices.getReviews(this, category_id);
+		}
+	}
 	/**
 	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
 	 * simply returns the {@link android.app.Activity} if
@@ -190,7 +196,8 @@ public class LowestDetailLevel extends FragmentListActivity<CategoryReview, Lowe
 		{
 			Intent i = new Intent(this, ScoreCreate.class);
 			i.putExtra("category_id",category_id);
-			startActivity(i);
+			startActivityForResult(i, 1);
+			//startActivity(i);
 		}
 	}
 

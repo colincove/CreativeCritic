@@ -8,6 +8,8 @@ import com.example.creativecritic.webservices.CategoryReview;
 import com.example.creativecritic.webservices.GetReviewsResult;
 import com.example.creativecritic.webservices.IResultListener;
 import com.example.creativecritic.webservices.Result;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -28,6 +30,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -45,6 +50,10 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 	private SubordinatesRequest request;
 	private  ActionBar actionBar;
 	private ArrayAdapter<CategoryPathNode> dropDownAdapter;
+	private LinearLayout imageLayout;
+	
+	private TextView categoryTitle;
+	private TextView scoreView;
 	public CategoryScreen(){
 		super(new Generic<CategoryDataFragment>(CategoryDataFragment.class));
 	}
@@ -52,7 +61,11 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category_screen);
-
+		
+		imageLayout = (LinearLayout)findViewById(R.id.category_image_view);
+		categoryTitle = (TextView) findViewById(R.id.categoryTitleTextView);
+		scoreView = (TextView) findViewById(R.id.generalScoreTextView);
+		
 		listAdapter = new CategoryArrayAdapter<Category>(this,
 				R.layout.review_item2, category_list);
 		//
@@ -108,6 +121,7 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 		// Serialize the current dropdown position.
 		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
 				.getSelectedNavigationIndex());
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -136,13 +150,17 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 	public void onBackPressed(){
 		List<CategoryPathNode> path = workerFragment.getCurrentData().getPath();
 		if(path.size()>1){
-			
+			listFragment.setListShown(false);
 			int back_id =path.get(path.size()-2).getCategoryId();
 			request=(SubordinatesRequest)webservices.requestSubordinates(this, back_id);
 			//request=(SubordinatesRequest)webservices.requestSubordinates(this, workerFragment.getPreviouseId());
 		}else{
 			super.onBackPressed();
 		}
+	}
+	protected void onDestroy(){
+		super.onDestroy();
+		imageLayout.removeAllViews();
 	}
 	private int oldPosition=0;
 	@Override
@@ -199,6 +217,13 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 			
 			// TODO Auto-generated method stub
 			SubordinatesResult subordinateResult = (SubordinatesResult) result;
+			if(workerFragment.getCategoryId()!=subordinateResult.getSelected().getId()){
+				workerFragment.clearImageCache();
+			}
+			
+			categoryTitle.setText(subordinateResult.getSelected().getName());
+			scoreView.setText(Float.toString(subordinateResult.getSelected().getScore()));
+			
 			workerFragment.pushResult(subordinateResult);
 			listAdapter.clear();
 			listAdapter.addAll(subordinateResult.getList());
@@ -206,6 +231,28 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 			
 			dropDownAdapter.clear();
 			dropDownAdapter.addAll(subordinateResult.getPath());
+			List<String> google_images = subordinateResult.getSelected().getGoogleImages();
+			imageLayout.removeAllViews();
+			ImageLoader.getInstance().clearDiscCache();
+			ImageLoader.getInstance().clearMemoryCache();
+			
+			if(workerFragment.hasImageCache()){
+				for(View view : workerFragment.getImageCache()){
+					imageLayout.addView(view);
+				}
+			}else{
+				for(int i=0;i<google_images.size();i++){
+					ImageView imageView = new SquareImageView(this);
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300,300);
+					params.setMargins(20, 0, 20, 0);
+					imageView.setLayoutParams(params);
+					imageLayout.addView(imageView);
+					workerFragment.addImage(imageView);
+					ImageLoader.getInstance().displayImage(google_images.get(i), imageView);
+				}
+			}
+			
+			
 			
 		}
 		}
@@ -217,10 +264,12 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 	 public static class CategoryDataFragment extends Fragment {
 		 private static final String TAG = "CATEGORY_DATA";
 		 private List<SubordinatesResult> results;
+		 private List<ImageView> imageCache;
 		 private int category_id=-1;
 
 	        public CategoryDataFragment(){
 	        	results=new ArrayList<SubordinatesResult>();
+	        	imageCache = new ArrayList<ImageView>();
 	        }
 	        public void onCreate(Bundle savedInstanceState) {
 	            super.onCreate(savedInstanceState);
@@ -254,6 +303,18 @@ public class CategoryScreen extends FragmentListActivity<Category, CategoryScree
 	    	   if(result==null)return -1;
 	    	   
 	    	   return result.getSelected().getId(); 
+	       }
+	       public void addImage(ImageView imageView){
+	    	   imageCache.add(imageView);
+	       }
+	       public void clearImageCache(){
+	    	   imageCache.clear();
+	       }
+	       public List<ImageView> getImageCache(){
+	    	   return imageCache;
+	       }
+	       public boolean hasImageCache(){
+	    	   return imageCache.size()!=0;
 	       }
 	        
 	 }

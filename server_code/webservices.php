@@ -15,7 +15,7 @@ function make_query($con) {
 /////////////////////////////////// VIEW CATAGORY TREE ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 function get_subordinates($con) {
-    $query = sprintf("SELECT node.category_id, node.lft, node.rgt,node.name,node.avg_score, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
+    $query = sprintf("SELECT node.category_id, node.lft, node.rgt,node.name,node.avg_score, node.google_images, (COUNT(parent.category_id) - (sub_tree.depth + 1)) AS depth
 FROM nested_category AS node,
         nested_category AS parent,
         nested_category AS sub_parent,
@@ -48,7 +48,8 @@ function get_nested_tree($con) {
     $query = sprintf("SELECT (COUNT(parent.name) - 1) AS depth, 
     CONCAT( REPEAT(' ', COUNT(parent.name) - 1), node.name) AS name,
     CONCAT( REPEAT(' ', COUNT(parent.name) - 1), node.avg_score) AS avg_score,
-    CONCAT( REPEAT(' ', COUNT(parent.category_id) - 1), node.category_id) AS category_id
+    CONCAT( REPEAT(' ', COUNT(parent.category_id) - 1), node.category_id) AS category_id,
+    CONCAT( REPEAT(' ', COUNT(parent.lft) - 1), node.lft) AS lft
 FROM nested_category AS node,
         nested_category AS parent
 WHERE node.lft BETWEEN parent.lft AND parent.rgt
@@ -64,7 +65,7 @@ FROM nested_category AS node,
         nested_category AS parent
 WHERE node.lft BETWEEN parent.lft AND parent.rgt
         AND node.category_id = %s
-ORDER BY node.lft;", 
+ORDER BY parent.lft;", 
 mysql_real_escape_string($_POST['category_id']));
 $result = mysql_query($query, $con) or die(mysql_error());
     
@@ -158,6 +159,9 @@ AND node.rgt = node.lft+1;",
 //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// USERS ///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+
+//SELECT google_images FROM nested_category WHERE category_id = 52
+
 function get_users($con) {
     $query = sprintf("SELECT * FROM users ORDER BY user_id;");
     $result = mysql_query($query, $con) or die(mysql_error());
@@ -191,4 +195,63 @@ $query = sprintf("SELECT * FROM users WHERE device_id='%s';",
     $result = mysql_query($query, $con) or die(mysql_error());
     return $result;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// Google /////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function get_google_images($data){
+   $url  = "https://ajax.googleapis.com/ajax/services/search/images?" .
+           "v=1.0&q=";
+    $first=True;
+    foreach ($data as $query){
+        if($first){
+            $first=false;
+         $url = $url.urlencode($query);
+        }else{
+               $url = $url."%20".urlencode($query);
+        }
+    }
+    $url=$url."&userip=INSERT-USER-IP";
+    // sendRequest
+    // note how referer is set manually
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_REFERER, "www.covertstudios.ca");
+    $body = curl_exec($ch);
+    curl_close($ch);
+
+    // now, process the JSON string
+    $json = json_decode($body);
+    // now have some fun with the results...
+    //var_dump($json);
+    return $body;
+}
+function set_google_images($con){
+    $query = sprintf("UPDATE nested_category SET google_images ='%s' WHERE category_id=%s",
+        mysql_real_escape_string($_POST['google_images_data']),
+        mysql_real_escape_string($_POST['category_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    return $result;
+}
+function clear_google_images($con){
+    $query = sprintf("UPDATE nested_category SET google_images ='' WHERE category_id=%s",
+        mysql_real_escape_string($_POST['category_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    return $result;
+}
+function has_google_images($con){
+      $query = sprintf("SELECT google_images FROM nested_category WHERE category_id=%s",
+        mysql_real_escape_string($_POST['category_id']));
+    $result = mysql_query($query, $con) or die(mysql_error());
+    $data = mysql_fetch_assoc($result);
+    if($data["google_images"]==''){
+        return False;
+    }else{
+        return True;
+    }
+
+    return $result;
+}
+
 ?>

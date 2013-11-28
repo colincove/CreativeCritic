@@ -25,20 +25,53 @@ public class SubordinatesRequest extends Request {
 	public Result createResult(JSONObject jObj){
 		JSONArray categoryList;
 		JSONArray categoryPath;
+		JSONObject googleImages=null;
+		JSONObject googleResponseData;
+		JSONArray googleResults;
+		JSONObject image;
 		Category selected=null;
 		try {
 			categoryList = jObj.getJSONArray("data");
 			categoryPath = jObj.getJSONArray("path");
+			
+			 
+			 
 			List<Category> list = new ArrayList<Category>();
 			List<CategoryPathNode> pathList = new ArrayList<CategoryPathNode>();
+			
+			
+			for(int i=0;i<categoryList.length();i++){
+			
+				
+			}
+			
 			JSONObject categoryData;
+			
 			for(int i=0;i<categoryList.length();i++){
 				categoryData=categoryList.getJSONObject(i);
+				List<String> google_images = new ArrayList<String>();
+				try{
+				googleImages  = categoryData.getJSONObject("google_images");
+				
+					
+				
+				 googleResponseData = googleImages.getJSONObject("responseData");
+				 googleResults=googleResponseData.getJSONArray("results");
+				 for( int j =0;j<googleResults.length();j++){
+					 image = googleResults.getJSONObject(j);
+					google_images.add(image.getString("url"));
+				 }
+				}catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				list.add(new Category(categoryData.getString("name"), 
 						(float)categoryData.getDouble("avg_score"),
 						categoryData.getInt("category_id"),
 						categoryData.getInt("rgt"),
-						categoryData.getInt("lft")));
+						categoryData.getInt("lft"),
+						google_images));
 			}
 			for(Category cat :list){
 				//remove item from list if it is the one we searched for. 

@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Generic" key="selection"/>
+		<item value="pushResult" key="selection"/>
 		<list key="findhistory">
+			<item value="pushResult"/>
+			<item value="onDe"/>
+			<item value="getSubordinatedRequest"/>
 			<item value="generic"/>
 			<item value="reviewListFragment"/>
 			<item value="listFragment"/>
 			<item value="v"/>
 			<item value="workerFragment"/>
-			<item value="mWorkFragment"/>
-			<item value="onSaveInstanceState"/>
-			<item value="oldFragmentTag"/>
 		</list>
 		<list key="replacehistory">
 		</list>

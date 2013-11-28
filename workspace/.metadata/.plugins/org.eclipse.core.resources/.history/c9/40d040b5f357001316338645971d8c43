@@ -1,0 +1,11 @@
+package com.example.creativecritic;
+
+import android.app.Application;
+
+public class CreativeCriticApplication extends Application {
+
+	public CreativeCriticApplication() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

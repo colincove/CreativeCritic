@@ -204,7 +204,7 @@ public class ScoreCreate extends FragmentActivity implements
 	public void result(Result result) {
 		// TODO Auto-generated method stub
 		Intent returnIntent = new Intent();
-		setResult(RESULT_CANCELED, returnIntent);
+		setResult(RESULT_OK, returnIntent);
 		finish();
 		
 	}

@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="org.json.JSONException"/>
-<fullyQualifiedTypeName name="java.lang.Thread"/>
-<fullyQualifiedTypeName name="org.apache.http.message.BasicNameValuePair"/>
-<fullyQualifiedTypeName name="com.example.creativecritic.UserLoginRequest"/>
-<fullyQualifiedTypeName name="org.json.JSONArray"/>
-<fullyQualifiedTypeName name="android.view.ViewGroup.LayoutParams"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
-<fullyQualifiedTypeName name="android.widget.SeekBar"/>
-<fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
-<fullyQualifiedTypeName name="android.widget.LinearLayout.LayoutParams"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.ReviewsArrayAdapter"/>
 <fullyQualifiedTypeName name="android.os.Message"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
@@ -45,19 +32,32 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="android.widget.ArrayAdapter"/>
 <fullyQualifiedTypeName name="android.support.v4.app.Fragment"/>
-<fullyQualifiedTypeName name="android.os.Bundle"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.Generic"/>
 <fullyQualifiedTypeName name="android.support.v4.app.ListFragment"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.CreateCriticWebservices"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.CategoryScreen.CategoryDataFragment"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.MyListFragment"/>
-<fullyQualifiedTypeName name="com.example.creativecritic.R.id"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.LowestDetailLevel.RetainedFragment"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.CategoryArrayAdapter"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.ReviewArrayAdapter"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.R.layout"/>
-<fullyQualifiedTypeName name="com.example.creativecritic.CategoryScreen"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="com.example.creativecritic.LowestDetailLevel"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.CategoryPathNode"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.UserLoginRequest"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.UserLoginResult"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
+<fullyQualifiedTypeName name="android.os.Bundle"/>
+<fullyQualifiedTypeName name="com.nostra13.universalimageloader.core.ImageLoaderConfiguration"/>
+<fullyQualifiedTypeName name="com.nostra13.universalimageloader.core.ImageLoader"/>
+<fullyQualifiedTypeName name="com.nostra13.universalimageloader.core.DisplayImageOptions"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.CategoryScreen"/>
+<fullyQualifiedTypeName name="android.widget.ImageView"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.SquareImageView"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout.LayoutParams"/>
+<fullyQualifiedTypeName name="com.nostra13.universalimageloader.core.assist.ImageScaleType"/>
+<fullyQualifiedTypeName name="com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer"/>
+<fullyQualifiedTypeName name="com.example.creativecritic.R.id"/>
 </qualifiedTypeNameHistroy>

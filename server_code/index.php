@@ -5,7 +5,7 @@
       <script src='script.js' ></script>
    </head>
    <body>
-     
+     <?php echo 'Current PHP version: ' . phpversion();?>
    	<div class="form_container">
          <h1>Query</h1>
    		<form id='sql' action='developer_services.php' method='post'>
@@ -157,6 +157,28 @@
             User Name: <input type='text' name='name'></input>
             Device ID: <input type='text' name='device_id'></input>
             <input type="hidden" name="action" value="insert_user_with_device"></input>
+         </form>
+      </div>
+       <div class="form_container">
+         <h1>Get Google Images</h1>
+          <form id='get_google_images' action='developer_services.php' method='post'>
+            <input type='submit' name='get_google_images' value='Get Google Images'></input>
+         </form>
+         <h1>Set Google Images</h1>
+          <form id='set_google_images' action='developer_services.php' method='post'>
+            <input type='submit' name='set_google_images' value='Set Google Images'></input>
+             Category ID: <input type='text' name='category_id'></input>
+              Image JSON Data: <input type='text' name='google_images_data'></input>
+         </form>
+          <h1>Clear Google Images</h1>
+          <form id='clear_google_images' action='developer_services.php' method='post'>
+            <input type='submit' name='clear_google_images' value='Set Google Images'></input>
+             Category ID: <input type='text' name='category_id'></input>
+         </form>
+         <h1>Has Google Images</h1>
+          <form id='has_google_images' action='developer_services.php' method='post'>
+            <input type='submit' name='has_google_images' value='Has Google Images'></input>
+             Category ID: <input type='text' name='category_id'></input>
          </form>
       </div>
    </body>

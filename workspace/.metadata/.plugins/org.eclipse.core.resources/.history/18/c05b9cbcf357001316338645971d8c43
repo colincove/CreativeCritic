@@ -1,0 +1,15 @@
+package com.example.creativecritic;
+
+import android.app.Application;
+import android.os.Bundle;
+
+public class CreativeCriticApplication extends Application {
+
+	public CreativeCriticApplication() {
+		// TODO Auto-generated constructor stub
+	}
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate();
+	}
+
+}

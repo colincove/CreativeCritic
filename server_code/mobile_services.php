@@ -36,6 +36,7 @@ switch($_POST['action']){
 
 function api_get_subordinates(){
 	global $con;
+	google_images_check();
 	$result = get_subordinates($con);
 	//exportResult($result);
 	exportCategoryResult($result);
@@ -116,15 +117,32 @@ function exportCategoryResult($result){
 	$paths =array();
 	while($r = mysql_fetch_assoc($result)) {
 		$r["avg_score"] = get_avg_score_int($con, $r["category_id"]);
+		$decoded=json_decode($r["google_images"]);
+		$r["google_images"] = $decoded;
    		 $rows[] = $r;
+   		 
 	}
 	$pathResult=get_path($con);
 	while($r = mysql_fetch_assoc($pathResult)) {
-   		 $paths[] = $r;
+   		$paths[] = $r;
 	}
 	$export['status']=1;
 	$export['data']=$rows;
 	$export['path'] = $paths;
-	print json_encode($export);
+
+$jsonResult=json_encode($export);
+	print str_replace("\/", "/", $jsonResult);
+}
+function google_images_check(){
+	global $con;
+	$google_image_query=array();
+	if(has_google_images($con)==False){
+		$pathResult = get_path($con);
+		while($r = mysql_fetch_assoc($pathResult)) {
+			$google_image_query[count($google_image_query)]=$r["name"];
+		}
+		$_POST['google_images_data'] = get_google_images($google_image_query);
+		set_google_images($con);
+	}
 }
 ?>

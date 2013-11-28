@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CategoryScreen"
+    tools:ignore="MergeRootFrame"
+    android:orientation="vertical" >
+ <HorizontalScrollView  
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+    <LinearLayout android:orientation="horizontal"
+        android:id="@id/category_image_view"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        >
+    </LinearLayout>
+</HorizontalScrollView >
+        <TextView
+            android:id="@+id/categoryTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/generalScoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="39dp"
+            android:layout_marginTop="43dp"
+            android:text="Overall"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/scoreNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <fragment android:name = "com.example.creativecritic.MyListFragment"
+            android:id = "@id/list_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            </fragment>
+   
+
+</LinearLayout>
